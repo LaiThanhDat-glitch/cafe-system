@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2026 at 06:53 PM
+-- Generation Time: Jun 01, 2026 at 03:53 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -528,48 +528,47 @@ CREATE TABLE `mon` (
   `moTa` text DEFAULT NULL,
   `diemDanhGia` double NOT NULL DEFAULT 0,
   `isNoiBat` tinyint(1) NOT NULL DEFAULT 0,
-  `ngayTao` datetime(3) NOT NULL DEFAULT current_timestamp(3),
-  `hinhAnh` varchar(500) DEFAULT NULL
+  `ngayTao` datetime(3) NOT NULL DEFAULT current_timestamp(3)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `mon`
 --
 
-INSERT INTO `mon` (`maMon`, `tenMon`, `giaBan`, `maDanhMuc`, `daXoa`, `slug`, `moTa`, `diemDanhGia`, `isNoiBat`, `ngayTao`, `hinhAnh`) VALUES
-('MON_CF01', 'Cà Phê Đen', 25000.00, 'cat-cf', 0, 'ca-phe-den', 'Cà phê đen đậm đà, pha phin truyền thống', 0, 1, '2026-06-01 01:38:39.566', NULL),
-('MON_CF02', 'Cà Phê Sữa', 35000.00, 'cat-cf', 0, 'ca-phe-sua', 'Cà phê sữa thơm ngon, béo ngậy', 0, 0, '2026-06-01 01:38:39.570', NULL),
-('MON_CF03', 'Cà Phê Latte', 55000.00, 'cat-cf', 0, 'ca-phe-latte', 'Latte với sữa hấp mịn và lớp bọt sữa', 0, 1, '2026-06-01 01:38:39.580', NULL),
-('MON_CF04', 'Cappuccino', 60000.00, 'cat-cf', 0, 'cappuccino', 'Cappuccino cân bằng espresso và sữa', 0, 0, '2026-06-01 01:38:39.584', NULL),
-('MON_CF05', 'Cold Brew', 65000.00, 'cat-cf', 0, 'cold-brew', 'Ủ lạnh 24 giờ, hương vị đậm đà, ít đắng', 0, 0, '2026-06-01 01:38:39.589', NULL),
-('MON_CF06', 'Americano', 45000.00, 'cat-cf', 0, 'americano', 'Espresso pha loãng với nước nóng', 4.3, 0, '2026-06-01 08:50:41.927', NULL),
-('MON_CF07', 'Espresso', 40000.00, 'cat-cf', 0, 'espresso', 'Espresso nguyên chất, đậm đặc', 4.4, 0, '2026-06-01 08:50:41.927', NULL),
-('MON_CF08', 'Flat White', 60000.00, 'cat-cf', 0, 'flat-white', 'Espresso đôi với sữa hấp mịn, ít bọt', 4.5, 0, '2026-06-01 08:50:41.927', NULL),
-('MON_CF09', 'Cà Phê Cốt Dừa', 65000.00, 'cat-cf', 0, 'ca-phe-cot-dua', 'Cà phê kết hợp nước cốt dừa béo ngậy', 4.8, 1, '2026-06-01 08:50:41.927', NULL),
-('MON_CF10', 'Bạc Xỉu', 38000.00, 'cat-cf', 0, 'bac-xiu', 'Cà phê sữa nhiều sữa ít cà phê, đặc trưng Sài Gòn', 4.6, 1, '2026-06-01 08:50:41.927', NULL),
-('MON_CK01', 'Cheesecake Dâu', 70000.00, 'cat-cake', 0, 'cheesecake-dau', 'Cheesecake New York với topping dâu tây tươi', 4.9, 1, '2026-06-01 08:50:41.927', NULL),
-('MON_CK02', 'Bánh Brownie', 50000.00, 'cat-cake', 0, 'banh-brownie', 'Brownie chocolate đậm đặc, fudgy', 4.7, 0, '2026-06-01 08:50:41.927', NULL),
-('MON_CK03', 'Macaron', 55000.00, 'cat-cake', 0, 'macaron', 'Macaron Pháp nhiều màu sắc, nhân kem mịn', 4.6, 0, '2026-06-01 08:50:41.927', NULL),
-('MON_CK04', 'Bánh Tart Trứng', 35000.00, 'cat-cake', 0, 'banh-tart-trung', 'Bánh tart trứng kiểu Bồ Đào Nha', 4.8, 1, '2026-06-01 08:50:41.927', NULL),
-('MON_FD01', 'Bánh Croissant', 40000.00, 'cat-fd', 0, 'banh-croissant', NULL, 0, 0, '2026-06-01 01:38:39.608', NULL),
-('MON_FD02', 'Tiramisu', 65000.00, 'cat-fd', 0, 'tiramisu', NULL, 0, 1, '2026-06-01 01:38:39.612', NULL),
-('MON_FD03', 'Bánh Mì Sandwich', 45000.00, 'cat-fd', 0, 'banh-mi-sandwich', 'Sandwich với rau tươi và sốt đặc biệt', 4.3, 0, '2026-06-01 08:50:41.927', NULL),
-('MON_FD04', 'Khoai Tây Chiên', 35000.00, 'cat-fd', 0, 'khoai-tay-chien', 'Khoai tây chiên giòn ăn kèm tương ớt', 4.2, 0, '2026-06-01 08:50:41.927', NULL),
-('MON_FD05', 'Bánh Waffle', 55000.00, 'cat-fd', 0, 'banh-waffle', 'Waffle giòn ăn kèm whipping cream và mứt dâu', 4.7, 1, '2026-06-01 08:50:41.927', NULL),
-('MON_ML01', 'Milkshake Chocolate', 65000.00, 'cat-ml', 0, 'milkshake-choco', 'Milkshake chocolate đậm đà, béo ngậy', 4.8, 1, '2026-06-01 08:50:41.927', NULL),
-('MON_ML02', 'Milkshake Dâu', 60000.00, 'cat-ml', 0, 'milkshake-dau', 'Milkshake dâu tây hồng đẹp mắt', 4.6, 0, '2026-06-01 08:50:41.927', NULL),
-('MON_ML03', 'Milkshake Vanilla', 60000.00, 'cat-ml', 0, 'milkshake-vanilla', 'Milkshake vanilla thơm dịu cổ điển', 4.5, 0, '2026-06-01 08:50:41.927', NULL),
-('MON_SM01', 'Sinh Tố Xoài', 50000.00, 'cat-sm', 0, 'sinh-to-xoai', NULL, 0, 1, '2026-06-01 01:38:39.601', NULL),
-('MON_SM02', 'Sinh Tố Bơ', 55000.00, 'cat-sm', 0, 'sinh-to-bo', NULL, 0, 0, '2026-06-01 01:38:39.604', NULL),
-('MON_SM03', 'Sinh Tố Dâu', 50000.00, 'cat-sm', 0, 'sinh-to-dau', 'Sinh tố dâu tây tươi chua ngọt', 4.5, 0, '2026-06-01 08:50:41.927', NULL),
-('MON_SM04', 'Sinh Tố Chuối', 45000.00, 'cat-sm', 0, 'sinh-to-chuoi', 'Sinh tố chuối mật mịn bổ dưỡng', 4.3, 0, '2026-06-01 08:50:41.927', NULL),
-('MON_SM05', 'Sinh Tố Mãng Cầu', 55000.00, 'cat-sm', 0, 'sinh-to-mang-cau', 'Sinh tố mãng cầu thơm ngon đặc biệt', 4.6, 0, '2026-06-01 08:50:41.927', NULL),
-('MON_TR01', 'Trà Đào', 45000.00, 'cat-tr', 0, 'tra-dao', 'Trà đào cam sả thơm mát', 0, 0, '2026-06-01 01:38:39.593', NULL),
-('MON_TR02', 'Trà Chanh', 30000.00, 'cat-tr', 0, 'tra-chanh', NULL, 0, 0, '2026-06-01 01:38:39.596', NULL),
-('MON_TR03', 'Trà Sữa Trân Châu', 55000.00, 'cat-tr', 0, 'tra-sua-tran-chau', 'Trà sữa đài loan với trân châu đen dẻo', 4.8, 1, '2026-06-01 08:50:41.927', NULL),
-('MON_TR04', 'Trà Ô Long', 50000.00, 'cat-tr', 0, 'tra-o-long', 'Trà ô long thơm dịu, tốt cho sức khỏe', 4.5, 0, '2026-06-01 08:50:41.927', NULL),
-('MON_TR05', 'Trà Xanh Latte', 55000.00, 'cat-tr', 0, 'tra-xanh-latte', 'Matcha latte mịn màng với sữa hấp', 4.6, 1, '2026-06-01 08:50:41.927', NULL),
-('MON_TR06', 'Trà Vải', 45000.00, 'cat-tr', 0, 'tra-vai', 'Trà vải hương thơm đặc trưng', 4.4, 0, '2026-06-01 08:50:41.927', NULL);
+INSERT INTO `mon` (`maMon`, `tenMon`, `giaBan`, `maDanhMuc`, `daXoa`, `slug`, `moTa`, `diemDanhGia`, `isNoiBat`, `ngayTao`) VALUES
+('MON_CF01', 'Cà Phê Đen', 25000.00, 'cat-cf', 0, 'ca-phe-den', 'Cà phê đen đậm đà, pha phin truyền thống', 0, 1, '2026-06-01 01:38:39.566'),
+('MON_CF02', 'Cà Phê Sữa', 35000.00, 'cat-cf', 0, 'ca-phe-sua', 'Cà phê sữa thơm ngon, béo ngậy', 0, 0, '2026-06-01 01:38:39.570'),
+('MON_CF03', 'Cà Phê Latte', 55000.00, 'cat-cf', 0, 'ca-phe-latte', 'Latte với sữa hấp mịn và lớp bọt sữa', 0, 1, '2026-06-01 01:38:39.580'),
+('MON_CF04', 'Cappuccino', 60000.00, 'cat-cf', 0, 'cappuccino', 'Cappuccino cân bằng espresso và sữa', 0, 0, '2026-06-01 01:38:39.584'),
+('MON_CF05', 'Cold Brew', 65000.00, 'cat-cf', 0, 'cold-brew', 'Ủ lạnh 24 giờ, hương vị đậm đà, ít đắng', 0, 0, '2026-06-01 01:38:39.589'),
+('MON_CF06', 'Americano', 45000.00, 'cat-cf', 0, 'americano', 'Espresso pha loãng với nước nóng', 4.3, 0, '2026-06-01 08:50:41.927'),
+('MON_CF07', 'Espresso', 40000.00, 'cat-cf', 0, 'espresso', 'Espresso nguyên chất, đậm đặc', 4.4, 0, '2026-06-01 08:50:41.927'),
+('MON_CF08', 'Flat White', 60000.00, 'cat-cf', 0, 'flat-white', 'Espresso đôi với sữa hấp mịn, ít bọt', 4.5, 0, '2026-06-01 08:50:41.927'),
+('MON_CF09', 'Cà Phê Cốt Dừa', 65000.00, 'cat-cf', 0, 'ca-phe-cot-dua', 'Cà phê kết hợp nước cốt dừa béo ngậy', 4.8, 1, '2026-06-01 08:50:41.927'),
+('MON_CF10', 'Bạc Xỉu', 38000.00, 'cat-cf', 0, 'bac-xiu', 'Cà phê sữa nhiều sữa ít cà phê, đặc trưng Sài Gòn', 4.6, 1, '2026-06-01 08:50:41.927'),
+('MON_CK01', 'Cheesecake Dâu', 70000.00, 'cat-cake', 0, 'cheesecake-dau', 'Cheesecake New York với topping dâu tây tươi', 4.9, 1, '2026-06-01 08:50:41.927'),
+('MON_CK02', 'Bánh Brownie', 50000.00, 'cat-cake', 0, 'banh-brownie', 'Brownie chocolate đậm đặc, fudgy', 4.7, 0, '2026-06-01 08:50:41.927'),
+('MON_CK03', 'Macaron', 55000.00, 'cat-cake', 0, 'macaron', 'Macaron Pháp nhiều màu sắc, nhân kem mịn', 4.6, 0, '2026-06-01 08:50:41.927'),
+('MON_CK04', 'Bánh Tart Trứng', 35000.00, 'cat-cake', 0, 'banh-tart-trung', 'Bánh tart trứng kiểu Bồ Đào Nha', 4.8, 1, '2026-06-01 08:50:41.927'),
+('MON_FD01', 'Bánh Croissant', 40000.00, 'cat-fd', 0, 'banh-croissant', NULL, 0, 0, '2026-06-01 01:38:39.608'),
+('MON_FD02', 'Tiramisu', 65000.00, 'cat-fd', 0, 'tiramisu', NULL, 0, 1, '2026-06-01 01:38:39.612'),
+('MON_FD03', 'Bánh Mì Sandwich', 45000.00, 'cat-fd', 0, 'banh-mi-sandwich', 'Sandwich với rau tươi và sốt đặc biệt', 4.3, 0, '2026-06-01 08:50:41.927'),
+('MON_FD04', 'Khoai Tây Chiên', 35000.00, 'cat-fd', 0, 'khoai-tay-chien', 'Khoai tây chiên giòn ăn kèm tương ớt', 4.2, 0, '2026-06-01 08:50:41.927'),
+('MON_FD05', 'Bánh Waffle', 55000.00, 'cat-fd', 0, 'banh-waffle', 'Waffle giòn ăn kèm whipping cream và mứt dâu', 4.7, 1, '2026-06-01 08:50:41.927'),
+('MON_ML01', 'Milkshake Chocolate', 65000.00, 'cat-ml', 0, 'milkshake-choco', 'Milkshake chocolate đậm đà, béo ngậy', 4.8, 1, '2026-06-01 08:50:41.927'),
+('MON_ML02', 'Milkshake Dâu', 60000.00, 'cat-ml', 0, 'milkshake-dau', 'Milkshake dâu tây hồng đẹp mắt', 4.6, 0, '2026-06-01 08:50:41.927'),
+('MON_ML03', 'Milkshake Vanilla', 60000.00, 'cat-ml', 0, 'milkshake-vanilla', 'Milkshake vanilla thơm dịu cổ điển', 4.5, 0, '2026-06-01 08:50:41.927'),
+('MON_SM01', 'Sinh Tố Xoài', 50000.00, 'cat-sm', 0, 'sinh-to-xoai', NULL, 0, 1, '2026-06-01 01:38:39.601'),
+('MON_SM02', 'Sinh Tố Bơ', 55000.00, 'cat-sm', 0, 'sinh-to-bo', NULL, 0, 0, '2026-06-01 01:38:39.604'),
+('MON_SM03', 'Sinh Tố Dâu', 50000.00, 'cat-sm', 0, 'sinh-to-dau', 'Sinh tố dâu tây tươi chua ngọt', 4.5, 0, '2026-06-01 08:50:41.927'),
+('MON_SM04', 'Sinh Tố Chuối', 45000.00, 'cat-sm', 0, 'sinh-to-chuoi', 'Sinh tố chuối mật mịn bổ dưỡng', 4.3, 0, '2026-06-01 08:50:41.927'),
+('MON_SM05', 'Sinh Tố Mãng Cầu', 55000.00, 'cat-sm', 0, 'sinh-to-mang-cau', 'Sinh tố mãng cầu thơm ngon đặc biệt', 4.6, 0, '2026-06-01 08:50:41.927'),
+('MON_TR01', 'Trà Đào', 45000.00, 'cat-tr', 0, 'tra-dao', 'Trà đào cam sả thơm mát', 0, 0, '2026-06-01 01:38:39.593'),
+('MON_TR02', 'Trà Chanh', 30000.00, 'cat-tr', 0, 'tra-chanh', NULL, 0, 0, '2026-06-01 01:38:39.596'),
+('MON_TR03', 'Trà Sữa Trân Châu', 55000.00, 'cat-tr', 0, 'tra-sua-tran-chau', 'Trà sữa đài loan với trân châu đen dẻo', 4.8, 1, '2026-06-01 08:50:41.927'),
+('MON_TR04', 'Trà Ô Long', 50000.00, 'cat-tr', 0, 'tra-o-long', 'Trà ô long thơm dịu, tốt cho sức khỏe', 4.5, 0, '2026-06-01 08:50:41.927'),
+('MON_TR05', 'Trà Xanh Latte', 55000.00, 'cat-tr', 0, 'tra-xanh-latte', 'Matcha latte mịn màng với sữa hấp', 4.6, 1, '2026-06-01 08:50:41.927'),
+('MON_TR06', 'Trà Vải', 45000.00, 'cat-tr', 0, 'tra-vai', 'Trà vải hương thơm đặc trưng', 4.4, 0, '2026-06-01 08:50:41.927');
 
 -- --------------------------------------------------------
 
