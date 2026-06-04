@@ -187,6 +187,7 @@ export default function LoginPage() {
               Demo accounts:
             </p>
             <div className="mt-2 space-y-1 text-xs text-coffee-500 text-center">
+              <p>Khách hàng thành viên: customer@cafe.vn / 123456</p>
               <p>Quản lý: manager@cafe.vn / 123456</p>
               <p>Thu ngân: cashier@cafe.vn / 123456</p>
               <p>Pha chế: barista@cafe.vn / 123456</p>

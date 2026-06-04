@@ -20,8 +20,17 @@ export default function CartPage() {
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(false);
   const [guest, setGuest] = useState({ hoTen: "", soDienThoai: "" });
+  const [diaChi, setDiaChi] = useState("");
+  const [useProfileAddress, setUseProfileAddress] = useState(false);
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedWard, setSelectedWard] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("COD");
   const [tienKhachDua, setTienKhachDua] = useState("");
+  const [notes, setNotes] = useState({});
 
   const sessionId = getSessionId();
 
@@ -38,6 +47,60 @@ export default function CartPage() {
     load();
   }, []);
 
+  useEffect(() => {
+    // Load provinces from public API; load districts/wards on demand
+    (async () => {
+      try {
+        const res = await fetch("https://provinces.open-api.vn/api/p");
+        const data = await res.json();
+        setProvinces(data || []);
+      } catch (e) {
+        console.warn("Failed to load provinces from open-api.vn", e);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (!selectedProvince) return;
+    (async () => {
+      try {
+        const res = await fetch(
+          `https://provinces.open-api.vn/api/p/${selectedProvince}?depth=2`,
+        );
+        const data = await res.json();
+        setDistricts(data.districts || []);
+      } catch (e) {
+        console.warn("Failed to load districts", e);
+      }
+    })();
+  }, [selectedProvince]);
+
+  useEffect(() => {
+    if (!selectedDistrict) return;
+    (async () => {
+      try {
+        const res = await fetch(
+          `https://provinces.open-api.vn/api/d/${selectedDistrict}?depth=2`,
+        );
+        const data = await res.json();
+        setWards(data.wards || []);
+      } catch (e) {
+        console.warn("Failed to load wards", e);
+      }
+    })();
+  }, [selectedDistrict]);
+
+  useEffect(() => {
+    // when province changes, reset district/ward
+    setSelectedDistrict("");
+    setSelectedWard("");
+  }, [selectedProvince]);
+
+  useEffect(() => {
+    // when district changes, reset ward
+    setSelectedWard("");
+  }, [selectedDistrict]);
+
   const updateQty = async (item, qty) => {
     if (qty <= 0) return remove(item.maChiTietGio);
     await cartAPI.addItem({ maMon: item.maMon, soLuong: qty, sessionId });
@@ -51,19 +114,76 @@ export default function CartPage() {
 
   const checkout = async () => {
     if (!cart || !cart.chiTietGio || cart.chiTietGio.length === 0) return;
+    // Validation: require address (either street or structured selection)
+    const hasStructuredAddress =
+      selectedWard || (selectedDistrict && selectedProvince);
+    if (!user) {
+      if (
+        !guest.hoTen ||
+        !guest.soDienThoai ||
+        (!diaChi && !hasStructuredAddress)
+      ) {
+        alert(
+          "Khách vãng lai phải nhập họ tên, số điện thoại và địa chỉ giao hàng (hoặc chọn Tỉnh/Huyện/Xã).",
+        );
+        return;
+      }
+    } else {
+      if (
+        !useProfileAddress &&
+        !diaChi &&
+        !user.diaChi &&
+        !hasStructuredAddress
+      ) {
+        alert("Vui lòng nhập địa chỉ giao hàng hoặc dùng địa chỉ trong hồ sơ.");
+        return;
+      }
+    }
+
     setLoading(true);
-    const items = cart.chiTietGio.map((c) => ({
-      maMon: c.maMon,
-      soLuong: c.soLuong,
-    }));
+    const buildGhiChu = (note) => {
+      if (!note) return undefined;
+      const parts = [];
+      if (note.da) parts.push(`Đá: ${note.da}`);
+      if (note.duong) parts.push(`Đường: ${note.duong}`);
+      if (note.size) parts.push(`Size: ${note.size}`);
+      if (note.text) parts.push(note.text);
+      return parts.length > 0 ? parts.join("; ") : undefined;
+    };
+
+    const items = cart.chiTietGio.map((c) => {
+      const note = notes[c.maChiTietGio];
+      const ghiChu = buildGhiChu(note);
+      const it = { maMon: c.maMon, soLuong: c.soLuong };
+      if (ghiChu) it.ghiChu = ghiChu;
+      return it;
+    });
+    const finalAddress = useProfileAddress ? user?.diaChi : diaChi;
+    const findName = (list, code) => {
+      if (!code || !list) return null;
+      const item = list.find(
+        (x) => String(x.code || x.id || x.Ma) === String(code),
+      );
+      return item ? item.name || item.ten || item.Ten || null : null;
+    };
+    const provinceName = findName(provinces, selectedProvince);
+    const districtName = findName(districts, selectedDistrict);
+    const wardName = findName(wards, selectedWard);
+
+    const thongTinGuest = JSON.stringify({
+      hoTen: user ? user.hoTen : guest.hoTen || "Khách vãng lai",
+      soDienThoai: user ? user.soDienThoai : guest.soDienThoai || "",
+      diaChi: finalAddress || null,
+      tinh: provinceName || null,
+      huyen: districtName || null,
+      xa: wardName || null,
+      sessionId,
+    });
+
     const payload = {
       items,
       loaiDonHang: "MANG_VE",
-      thongTinGuest: JSON.stringify({
-        hoTen: guest.hoTen || "Khách vãng lai",
-        soDienThoai: guest.soDienThoai || "",
-        sessionId,
-      }),
+      thongTinGuest,
     };
     try {
       const orderRes = await orderAPI.create(payload);
@@ -102,6 +222,23 @@ export default function CartPage() {
     (s, c) => s + Number(c.mon?.giaBan || 0) * c.soLuong,
     0,
   );
+
+  const ICE_OPTIONS = ["Không đá", "Ít đá", "Đá vừa", "Nhiều đá"];
+  const SUGAR_OPTIONS = [
+    "Không đường",
+    "Ít đường",
+    "Bình thường",
+    "Nhiều đường",
+  ];
+  const SIZE_OPTIONS = ["S", "M", "L"];
+
+  const setItemNoteField = (id, field, value) => {
+    setNotes((prev) => {
+      const item = prev[id] || { da: "", duong: "", size: "", text: "" };
+      const next = { ...item, [field]: value };
+      return { ...prev, [id]: next };
+    });
+  };
 
   return (
     <div className="min-h-screen bg-cream-100">
@@ -171,6 +308,100 @@ export default function CartPage() {
                       +
                     </button>
                   </div>
+                  {item.mon?.doUong && (
+                    <div className="mt-3">
+                      <div className="grid grid-cols-3 gap-2">
+                        <select
+                          className="input-field"
+                          value={
+                            (notes[item.maChiTietGio] &&
+                              notes[item.maChiTietGio].da) ||
+                            item.mon.doUong?.mucDoDa ||
+                            ""
+                          }
+                          onChange={(e) =>
+                            setItemNoteField(
+                              item.maChiTietGio,
+                              "da",
+                              e.target.value,
+                            )
+                          }
+                        >
+                          <option value="">Đá</option>
+                          {ICE_OPTIONS.map((o) => (
+                            <option key={o} value={o}>
+                              {o}
+                            </option>
+                          ))}
+                        </select>
+
+                        <select
+                          className="input-field"
+                          value={
+                            (notes[item.maChiTietGio] &&
+                              notes[item.maChiTietGio].duong) ||
+                            item.mon.doUong?.mucDoDuong ||
+                            ""
+                          }
+                          onChange={(e) =>
+                            setItemNoteField(
+                              item.maChiTietGio,
+                              "duong",
+                              e.target.value,
+                            )
+                          }
+                        >
+                          <option value="">Đường</option>
+                          {SUGAR_OPTIONS.map((o) => (
+                            <option key={o} value={o}>
+                              {o}
+                            </option>
+                          ))}
+                        </select>
+
+                        <select
+                          className="input-field"
+                          value={
+                            (notes[item.maChiTietGio] &&
+                              notes[item.maChiTietGio].size) ||
+                            item.mon.doUong?.mucSize ||
+                            ""
+                          }
+                          onChange={(e) =>
+                            setItemNoteField(
+                              item.maChiTietGio,
+                              "size",
+                              e.target.value,
+                            )
+                          }
+                        >
+                          <option value="">Size</option>
+                          {SIZE_OPTIONS.map((o) => (
+                            <option key={o} value={o}>
+                              {o}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <textarea
+                        className="input-field mt-2"
+                        placeholder="Ghi chú thêm (ví dụ: bỏ đá, thêm topping...)"
+                        value={
+                          (notes[item.maChiTietGio] &&
+                            notes[item.maChiTietGio].text) ||
+                          ""
+                        }
+                        onChange={(e) =>
+                          setItemNoteField(
+                            item.maChiTietGio,
+                            "text",
+                            e.target.value,
+                          )
+                        }
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -194,6 +425,104 @@ export default function CartPage() {
                     setGuest({ ...guest, soDienThoai: e.target.value })
                   }
                 />
+                <div>
+                  {user ? (
+                    <label className="inline-flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={useProfileAddress}
+                        onChange={(e) => {
+                          setUseProfileAddress(e.target.checked);
+                          if (e.target.checked) setDiaChi(user.diaChi || "");
+                        }}
+                      />
+                      <span> Dùng địa chỉ trong hồ sơ</span>
+                    </label>
+                  ) : null}
+                </div>
+
+                <div className="grid grid-cols-3 gap-2">
+                  <select
+                    className="input-field"
+                    value={selectedProvince}
+                    onChange={(e) => setSelectedProvince(e.target.value)}
+                  >
+                    <option value="">Tỉnh / Thành</option>
+                    {provinces.map((p) => (
+                      <option
+                        key={p.code || p.id || p.Ma}
+                        value={p.code || p.id || p.Ma}
+                      >
+                        {p.name || p.ten || p.Ten}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    className="input-field"
+                    value={selectedDistrict}
+                    onChange={(e) => setSelectedDistrict(e.target.value)}
+                    disabled={!selectedProvince}
+                  >
+                    <option value="">Quận / Huyện</option>
+                    {districts
+                      .filter((d) => {
+                        const parent =
+                          d.province_code ||
+                          d.tinh_code ||
+                          d.parent_code ||
+                          d.MaTinh;
+                        return (
+                          selectedProvince &&
+                          String(parent) === String(selectedProvince)
+                        );
+                      })
+                      .map((d) => (
+                        <option
+                          key={d.code || d.id || d.Ma}
+                          value={d.code || d.id || d.Ma}
+                        >
+                          {d.name || d.ten || d.Ten}
+                        </option>
+                      ))}
+                  </select>
+
+                  <select
+                    className="input-field"
+                    value={selectedWard}
+                    onChange={(e) => setSelectedWard(e.target.value)}
+                    disabled={!selectedDistrict}
+                  >
+                    <option value="">Phường / Xã</option>
+                    {wards
+                      .filter((w) => {
+                        const parent =
+                          w.district_code ||
+                          w.huyen_code ||
+                          w.parent_code ||
+                          w.MaHuyen;
+                        return (
+                          selectedDistrict &&
+                          String(parent) === String(selectedDistrict)
+                        );
+                      })
+                      .map((w) => (
+                        <option
+                          key={w.code || w.id || w.Ma}
+                          value={w.code || w.id || w.Ma}
+                        >
+                          {w.name || w.ten || w.Ten}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+
+                <input
+                  className="input-field mt-2"
+                  placeholder="Số nhà, đường, tên tổ/khối (ví dụ: 123 Đường A)"
+                  value={diaChi}
+                  onChange={(e) => setDiaChi(e.target.value)}
+                />
               </div>
             </div>
 
@@ -209,16 +538,6 @@ export default function CartPage() {
                     onChange={() => setPaymentMethod("COD")}
                   />
                   <span>Tiền mặt khi nhận (COD)</span>
-                </label>
-                <label className="inline-flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="pay"
-                    value="TIEN_MAT"
-                    checked={paymentMethod === "TIEN_MAT"}
-                    onChange={() => setPaymentMethod("TIEN_MAT")}
-                  />
-                  <span>Thanh toán tại quầy (Tiền mặt)</span>
                 </label>
                 <label className="inline-flex items-center gap-2">
                   <input
@@ -261,6 +580,24 @@ export default function CartPage() {
                 >
                   Xóa giỏ hàng
                 </button>
+                <div className="flex gap-2 mt-2">
+                  <a
+                    href="https://shopeefood.vn"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3 py-2 bg-orange-500 text-white rounded"
+                  >
+                    Đặt qua ShopeeFood
+                  </a>
+                  <a
+                    href="https://www.grab.com/vn/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3 py-2 bg-green-600 text-white rounded"
+                  >
+                    Đặt qua Grab
+                  </a>
+                </div>
               </div>
             </div>
           </div>
