@@ -14,6 +14,7 @@ import AdminMenuPage from "./pages/AdminMenuPage";
 import StaffPage from "./pages/StaffPage";
 import OrdersPage from "./pages/OrdersPage";
 import CustomerPage from "./pages/CustomerPage";
+import IncidentReportsPage from "./pages/IncidentReportsPage";
 
 const MANAGER = "Quản lý";
 const CASHIER = "Thu ngân";
@@ -25,13 +26,16 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <span className="text-coffee-600 font-display text-2xl">Đang tải...</span>
+        <span className="text-coffee-600 font-display text-2xl">
+          Đang tải...
+        </span>
       </div>
     );
   }
 
   if (!user) return <Navigate to="/login" replace />;
-  if (allowedRoles && !allowedRoles.includes(role)) return <Navigate to="/" replace />;
+  if (allowedRoles && !allowedRoles.includes(role))
+    return <Navigate to="/" replace />;
   return children;
 };
 
@@ -48,92 +52,101 @@ export default function App() {
 
           <Route
             path="/pos"
-            element={(
+            element={
               <ProtectedRoute allowedRoles={[MANAGER, CASHIER]}>
                 <POSPage />
               </ProtectedRoute>
-            )}
+            }
           />
 
           <Route
             path="/kds"
-            element={(
+            element={
               <ProtectedRoute allowedRoles={[MANAGER, BARISTA]}>
                 <KDSPage />
               </ProtectedRoute>
-            )}
+            }
           />
 
           <Route
             path="/dashboard"
-            element={(
+            element={
               <ProtectedRoute allowedRoles={[MANAGER]}>
                 <DashboardPage />
               </ProtectedRoute>
-            )}
+            }
+          />
+
+          <Route
+            path="/incidents"
+            element={
+              <ProtectedRoute allowedRoles={[MANAGER]}>
+                <IncidentReportsPage />
+              </ProtectedRoute>
+            }
           />
 
           <Route
             path="/tables"
-            element={(
+            element={
               <ProtectedRoute allowedRoles={[MANAGER, CASHIER]}>
                 <TablePage />
               </ProtectedRoute>
-            )}
+            }
           />
 
           <Route
             path="/inventory"
-            element={(
+            element={
               <ProtectedRoute allowedRoles={[MANAGER]}>
                 <InventoryPage />
               </ProtectedRoute>
-            )}
+            }
           />
 
           <Route
             path="/admin/menu"
-            element={(
+            element={
               <ProtectedRoute allowedRoles={[MANAGER]}>
                 <AdminMenuPage />
               </ProtectedRoute>
-            )}
+            }
           />
 
           <Route
             path="/staff"
-            element={(
+            element={
               <ProtectedRoute allowedRoles={[MANAGER, CASHIER, BARISTA]}>
                 <StaffPage />
               </ProtectedRoute>
-            )}
+            }
           />
 
           <Route
             path="/orders"
-            element={(
+            element={
               <ProtectedRoute>
                 <OrdersPage />
               </ProtectedRoute>
-            )}
+            }
           />
 
           <Route
             path="/account"
-            element={(
+            element={
               <ProtectedRoute>
                 <CustomerPage />
               </ProtectedRoute>
-            )}
+            }
           />
 
           <Route
             path="/history"
-            element={(
+            element={
               <ProtectedRoute>
                 <CustomerPage />
               </ProtectedRoute>
-            )}
+            }
           />
         </Routes>
       </BrowserRouter>

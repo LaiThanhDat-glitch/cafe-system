@@ -144,4 +144,9 @@ export const paymentAPI = {
   create: (data) => api.post("/payments", data),
 };
 
+export const incidentAPI = {
+  create: (data) => api.post("/incidents", data),
+  list: () => api.get("/incidents"),
+};
+
 export default api;

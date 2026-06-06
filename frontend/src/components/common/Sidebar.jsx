@@ -7,12 +7,33 @@ const BARISTA = "Pha chế";
 
 const navItems = [
   { path: "/dashboard", label: "Dashboard", icon: "📊", roles: [MANAGER] },
-  { path: "/pos", label: "POS Bán hàng", icon: "🖥️", roles: [MANAGER, CASHIER] },
+  {
+    path: "/pos",
+    label: "POS Bán hàng",
+    icon: "🖥️",
+    roles: [MANAGER, CASHIER],
+  },
   { path: "/kds", label: "KDS Pha chế", icon: "👨‍🍳", roles: [MANAGER, BARISTA] },
-  { path: "/tables", label: "Quản lý bàn", icon: "🪑", roles: [MANAGER, CASHIER] },
+  {
+    path: "/tables",
+    label: "Quản lý bàn",
+    icon: "🪑",
+    roles: [MANAGER, CASHIER],
+  },
   { path: "/orders", label: "Đơn hàng", icon: "📋", roles: [MANAGER, CASHIER] },
-  { path: "/inventory", label: "Kho nguyên liệu", icon: "📦", roles: [MANAGER] },
-  { path: "/staff", label: "Chấm công", icon: "⏱️", roles: [MANAGER, CASHIER, BARISTA] },
+  {
+    path: "/inventory",
+    label: "Kho nguyên liệu",
+    icon: "📦",
+    roles: [MANAGER],
+  },
+  { path: "/incidents", label: "Biên bản sự cố", icon: "📑", roles: [MANAGER] },
+  {
+    path: "/staff",
+    label: "Chấm công",
+    icon: "⏱️",
+    roles: [MANAGER, CASHIER, BARISTA],
+  },
   { path: "/admin/menu", label: "Quản lý món", icon: "🍵", roles: [MANAGER] },
   { path: "/menu", label: "Xem thực đơn", icon: "🧾", roles: [] },
 ];
@@ -69,7 +90,9 @@ export default function Sidebar() {
             {user?.hoTen?.[0] || "?"}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-cream-100 truncate">{user?.hoTen}</p>
+            <p className="text-sm font-medium text-cream-100 truncate">
+              {user?.hoTen}
+            </p>
             <p className="text-xs text-cream-400 truncate">{user?.email}</p>
           </div>
         </div>

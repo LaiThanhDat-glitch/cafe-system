@@ -19,6 +19,7 @@ const paymentRoutes = require("./routes/payment.routes");
 const webhookRoutes = require("./routes/webhook.routes");
 const cartRoutes = require("./routes/cart.routes");
 const customerRoutes = require("./routes/customer.routes");
+const incidentRoutes = require("./routes/incident.routes");
 const { errorHandler } = require("./middlewares/error.middleware");
 
 const app = express();
@@ -59,6 +60,7 @@ app.use("/api/reports", reportRoutes);
 app.use("/api/promotions", promoRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/webhooks", webhookRoutes);
+app.use("/api/incidents", incidentRoutes);
 app.use("/api/customer", customerRoutes);
 
 app.get("/api/health", (req, res) =>
