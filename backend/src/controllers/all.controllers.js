@@ -196,6 +196,11 @@ const getStaff = asyncHandler(async (req, res) => {
         },
       },
       vaiTro: true,
+      caLamViec: {
+        where: { thoiGianRaCa: null },
+        orderBy: { thoiGianVaoCa: "desc" },
+        take: 1,
+      },
     },
   });
   res.json(staff);
@@ -241,7 +246,42 @@ const getShifts = asyncHandler(async (req, res) => {
   res.json(shifts);
 });
 
+const getCurrentShift = asyncHandler(async (req, res) => {
+  if (!req.user.nhanVien) {
+    return res.status(403).json({ message: "Tài khoản không phải nhân viên" });
+  }
+
+  const shift = await prisma.caLamViec.findFirst({
+    where: {
+      maNhanVien: req.user.maNguoiDung,
+      thoiGianRaCa: null,
+    },
+    include: {
+      nhanVien: { include: { nguoiDung: { select: { hoTen: true } } } },
+    },
+    orderBy: { thoiGianVaoCa: "desc" },
+  });
+
+  res.json(shift);
+});
+
 const checkin = asyncHandler(async (req, res) => {
+  if (!req.user.nhanVien) {
+    return res.status(403).json({ message: "Tài khoản không phải nhân viên" });
+  }
+
+  const openShift = await prisma.caLamViec.findFirst({
+    where: {
+      maNhanVien: req.user.maNguoiDung,
+      thoiGianRaCa: null,
+    },
+    orderBy: { thoiGianVaoCa: "desc" },
+  });
+
+  if (openShift) {
+    return res.json(openShift);
+  }
+
   const shift = await prisma.caLamViec.create({
     data: {
       loaiCa: req.body.loaiCa || "SANG",
@@ -253,14 +293,36 @@ const checkin = asyncHandler(async (req, res) => {
 });
 
 const checkout = asyncHandler(async (req, res) => {
+  if (!req.user.nhanVien) {
+    return res.status(403).json({ message: "Tài khoản không phải nhân viên" });
+  }
+
+  const where = req.params.id
+    ? { maCa: req.params.id }
+    : { maNhanVien: req.user.maNguoiDung, thoiGianRaCa: null };
+
+  const current = await prisma.caLamViec.findFirst({ where });
+  if (!current) {
+    return res.status(404).json({ message: "Không có ca đang mở" });
+  }
+  if (current.maNhanVien !== req.user.maNguoiDung) {
+    const role = req.user.nhanVien?.vaiTro?.tenVaiTro;
+    if (role !== "Quản lý") {
+      return res.status(403).json({ message: "Không thể checkout ca của nhân viên khác" });
+    }
+  }
+  if (current.thoiGianRaCa) {
+    return res.json(current);
+  }
+
   const shift = await prisma.caLamViec.update({
-    where: { maCa: req.params.id },
+    where: { maCa: current.maCa },
     data: { thoiGianRaCa: new Date() },
   });
   res.json(shift);
 });
 
-const staffController = { getStaff, createStaff, getShifts, checkin, checkout };
+const staffController = { getStaff, createStaff, getShifts, getCurrentShift, checkin, checkout };
 
 // ═══════════════════════════════════════════════════
 // REPORT CONTROLLER
