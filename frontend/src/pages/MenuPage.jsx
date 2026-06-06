@@ -81,7 +81,7 @@ export default function MenuPage() {
     <div className="min-h-screen bg-cream-100">
       {/* Header */}
       <header className="bg-coffee-900 text-cream-100 sticky top-0 z-40 shadow-lg">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center sm:justify-between gap-3 sm:gap-0">
           <div className="flex items-center gap-3">
             <span className="text-2xl">☕</span>
             <div>
@@ -91,7 +91,7 @@ export default function MenuPage() {
           </div>
           <div className="flex items-center gap-3">
             <input
-              className="bg-coffee-800 border border-coffee-700 rounded-lg px-3 py-1.5 text-sm text-cream-100 placeholder-coffee-400 focus:outline-none focus:border-coffee-500 w-48"
+              className="bg-coffee-800 border border-coffee-700 rounded-lg px-3 py-1.5 text-sm text-cream-100 placeholder-coffee-400 focus:outline-none focus:border-coffee-500 w-full sm:w-48 mt-2 sm:mt-0"
               placeholder="🔍 Tìm món..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -130,8 +130,8 @@ export default function MenuPage() {
       </header>
 
       {/* Hero */}
-      <div className="bg-gradient-to-r from-coffee-900 via-coffee-800 to-coffee-700 text-cream-100 py-16 px-4 text-center">
-        <h2 className="font-display text-5xl font-extrabold mb-2">
+      <div className="bg-gradient-to-r from-coffee-900 via-coffee-800 to-coffee-700 text-cream-100 py-12 sm:py-16 px-4 text-center">
+        <h2 className="font-display text-3xl sm:text-5xl font-extrabold mb-2">
           Cafe System
         </h2>
         <p className="text-cream-300 text-lg">
@@ -142,7 +142,7 @@ export default function MenuPage() {
 
       {/* Categories */}
       <div className="max-w-6xl mx-auto px-4 py-4">
-        <div className="sticky top-20 z-30 bg-cream-100 py-2 -mx-4 px-4">
+        <div className="sticky top-16 sm:top-20 z-30 bg-cream-100 py-2 px-2 sm:px-4">
           <div className="flex gap-2 overflow-x-auto pb-2">
             <button
               onClick={() => setActiveCat("all")}
@@ -168,7 +168,7 @@ export default function MenuPage() {
 
       {/* Items */}
       <div className="max-w-6xl mx-auto px-4 pb-32">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {items.map((item) => (
             <div
               key={item.maMon}
