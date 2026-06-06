@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import Sidebar from '../components/common/Sidebar';
-import { reportAPI } from '../services/api';
+import { reportAPI, inventoryAPI } from '../services/api';
+import { Link } from 'react-router-dom';
 
 const formatVND = (n) => {
   if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'M';
@@ -15,6 +16,7 @@ export default function DashboardPage() {
   const [today, setToday] = useState(null);
   const [month, setMonth] = useState(null);
   const [daily, setDaily] = useState([]);
+  const [inventory, setInventory] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,10 +24,12 @@ export default function DashboardPage() {
       reportAPI.getRevenue({ type: 'today' }),
       reportAPI.getRevenue({ type: 'month' }),
       reportAPI.getDaily({ days: 30 }),
-    ]).then(([t, m, d]) => {
+      inventoryAPI.getSummary(),
+    ]).then(([t, m, d, inv]) => {
       setToday(t.data);
       setMonth(m.data);
       setDaily(d.data);
+      setInventory(inv.data);
     }).finally(() => setLoading(false));
   }, []);
 
@@ -71,6 +75,38 @@ export default function DashboardPage() {
               </div>
             ))}
           </div>
+
+          {/* Inventory KPIs */}
+          {inventory && (
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="font-display text-lg text-coffee-900">Kho nguyên liệu</h2>
+                <Link to="/inventory" className="text-sm text-coffee-600 hover:text-coffee-800 underline">Quản lý kho →</Link>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { label: 'Nguyên liệu', value: inventory.totalIngredients, icon: '📦', color: 'bg-cream-50 border-cream-200', textColor: 'text-coffee-700' },
+                  { label: 'Sắp hết hàng', value: inventory.lowStockCount, icon: '⚠️', color: inventory.lowStockCount > 0 ? 'bg-amber-50 border-amber-200' : 'bg-green-50 border-green-200', textColor: inventory.lowStockCount > 0 ? 'text-amber-700' : 'text-green-700' },
+                  { label: 'Giá trị tồn kho', value: formatVND(inventory.totalStockValue) + 'đ', icon: '💎', color: 'bg-blue-50 border-blue-200', textColor: 'text-blue-700' },
+                  { label: 'Nhập/Xuất tháng', value: `${inventory.monthImport.count}/${inventory.monthExport.count}`, icon: '🔄', color: 'bg-purple-50 border-purple-200', textColor: 'text-purple-700' },
+                ].map((kpi, i) => (
+                  <div key={i} className={`card border ${kpi.color} p-4`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xl">{kpi.icon}</span>
+                      <p className="text-xs text-coffee-500 leading-tight">{kpi.label}</p>
+                    </div>
+                    <p className={`font-display text-2xl font-bold ${kpi.textColor}`}>{kpi.value}</p>
+                  </div>
+                ))}
+              </div>
+              {inventory.lowStockItems?.length > 0 && (
+                <div className="mt-3 bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-800">
+                  <strong>Cảnh báo:</strong>{' '}
+                  {inventory.lowStockItems.map(i => `${i.tenNL} (${i.tonKho}${i.donVi})`).join(' · ')}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Revenue chart */}
           <div className="grid grid-cols-3 gap-6">

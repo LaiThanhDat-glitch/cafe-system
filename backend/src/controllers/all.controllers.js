@@ -4,6 +4,7 @@
 const prisma = require("../prisma/client");
 const { createVnpayClient } = require("../config/vnpay");
 const { clearCartByOwner } = require("./cart.controller");
+const { deductInventoryForOrder } = require("../services/inventory.service");
 const { asyncHandler } = require("../middlewares/error.middleware");
 const {
   emitOrderStatusUpdate,
@@ -88,94 +89,6 @@ const deleteTable = asyncHandler(async (req, res) => {
 });
 
 const tableController = { getTables, createTable, updateTable, deleteTable };
-
-// ═══════════════════════════════════════════════════
-// INVENTORY CONTROLLER
-// ═══════════════════════════════════════════════════
-const { emitLowStock } = require("../socket/socketManager");
-
-const LOW_STOCK_THRESHOLD = 10;
-
-const getIngredients = asyncHandler(async (req, res) => {
-  const items = await prisma.nguyenLieu.findMany({
-    where: { daXoa: false },
-    orderBy: { tenNL: "asc" },
-  });
-  res.json(items);
-});
-
-const createIngredient = asyncHandler(async (req, res) => {
-  const { tenNL, tonKho, donVi } = req.body;
-  const item = await prisma.nguyenLieu.create({
-    data: { tenNL, tonKho, donVi },
-  });
-  res.status(201).json(item);
-});
-
-const updateIngredient = asyncHandler(async (req, res) => {
-  const item = await prisma.nguyenLieu.update({
-    where: { maNguyenLieu: req.params.id },
-    data: req.body,
-  });
-  if (item.tonKho <= LOW_STOCK_THRESHOLD) emitLowStock(item);
-  res.json(item);
-});
-
-const createWarehouseVoucher = asyncHandler(async (req, res) => {
-  const { loaiPhieu, maNCC, items } = req.body; // NHAP | XUAT | HUY
-  const maNhanVien = req.user.maNguoiDung;
-
-  const result = await prisma.$transaction(async (tx) => {
-    const tongGiaTri = items.reduce(
-      (s, i) => s + i.soLuongThucTe * i.donGia,
-      0,
-    );
-    const phieu = await tx.phieuKho.create({
-      data: {
-        thoiGianLap: new Date(),
-        tongGiaTri,
-        loaiPhieu,
-        maNCC,
-        maNhanVien,
-        chiTiet: { create: items },
-      },
-      include: { chiTiet: true },
-    });
-
-    // Update stock
-    for (const item of items) {
-      const delta =
-        loaiPhieu === "NHAP" ? item.soLuongThucTe : -item.soLuongThucTe;
-      const nl = await tx.nguyenLieu.update({
-        where: { maNguyenLieu: item.maNguyenLieu },
-        data: { tonKho: { increment: delta } },
-      });
-      if (nl.tonKho <= LOW_STOCK_THRESHOLD) emitLowStock(nl);
-    }
-    return phieu;
-  });
-
-  res.status(201).json(result);
-});
-
-const getVouchers = asyncHandler(async (req, res) => {
-  const vouchers = await prisma.phieuKho.findMany({
-    include: {
-      chiTiet: { include: { nguyenLieu: true } },
-      nhanVien: { include: { nguoiDung: true } },
-    },
-    orderBy: { thoiGianLap: "desc" },
-  });
-  res.json(vouchers);
-});
-
-const inventoryController = {
-  getIngredients,
-  createIngredient,
-  updateIngredient,
-  createWarehouseVoucher,
-  getVouchers,
-};
 
 // ═══════════════════════════════════════════════════
 // STAFF CONTROLLER
@@ -565,11 +478,15 @@ const createPayment = asyncHandler(async (req, res) => {
       });
     }
 
-    // Mark order complete for immediate methods
+    // Mark order complete + trừ kho khi thanh toán thành công
     if (trangThaiGiaoDich === "THANH_CONG") {
       await tx.donHang.update({
         where: { maDonHang },
         data: { trangThai: "HOAN_THANH" },
+      });
+      await deductInventoryForOrder(tx, {
+        maDonHang,
+        maNhanVien: req.user?.maNguoiDung,
       });
     }
 
@@ -622,14 +539,18 @@ const handleVnpayCallback = asyncHandler(async (req, res) => {
   if (!thanh) return res.status(404).send("Payment not found");
 
   if (responseCode === "00") {
-    await prisma.thanhToan.update({
-      where: { maThanhToan: thanh.maThanhToan },
-      data: { trangThaiGiaoDich: "THANH_CONG" },
+    await prisma.$transaction(async (tx) => {
+      await tx.thanhToan.update({
+        where: { maThanhToan: thanh.maThanhToan },
+        data: { trangThaiGiaoDich: "THANH_CONG" },
+      });
+      await tx.donHang.update({
+        where: { maDonHang },
+        data: { trangThai: "HOAN_THANH" },
+      });
+      await deductInventoryForOrder(tx, { maDonHang });
     });
-    const order = await prisma.donHang.update({
-      where: { maDonHang },
-      data: { trangThai: "HOAN_THANH" },
-    });
+    const order = await prisma.donHang.findUnique({ where: { maDonHang } });
     const guestContext = parseGuestCartContext(order);
     await clearCartByOwner({
       maNguoiDung: order.maKhachHang || undefined,
@@ -685,7 +606,6 @@ const webhookController = { handleDeliveryWebhook };
 module.exports = {
   kdsController,
   tableController,
-  inventoryController,
   staffController,
   reportController,
   promoController,

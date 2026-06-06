@@ -6,6 +6,7 @@ const {
   emitOrderStatusUpdate,
   emitOrderComplete,
 } = require("../socket/socketManager");
+const { restoreInventoryForOrder } = require("../services/inventory.service");
 
 const normalizePhone = (value = "") => String(value).replace(/\D/g, "");
 
@@ -97,10 +98,6 @@ const createOrder = asyncHandler(async (req, res) => {
         ghiChu: item.ghiChu,
         donGiaThoiDiemBan: Number(mon.giaBan) + extraPrice,
         tuyChon,
-        tieuHao: await prisma.dinhMuc.findMany({
-          where: { maMon: mon.maMon },
-          include: { nguyenLieu: true },
-        }),
       };
     }),
   );
@@ -175,17 +172,6 @@ const createOrder = asyncHandler(async (req, res) => {
         ban: true,
       },
     });
-
-    // Deduct inventory
-    for (const item of itemDetails) {
-      for (const dm of item.tieuHao) {
-        const needed = dm.soLuongTieuHao * item.soLuong;
-        await tx.nguyenLieu.update({
-          where: { maNguyenLieu: dm.maNguyenLieu },
-          data: { tonKho: { decrement: needed } },
-        });
-      }
-    }
 
     // Update table status
     if (maBan) {
@@ -276,10 +262,18 @@ const updateStatus = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Trạng thái không hợp lệ" });
   }
 
-  const order = await prisma.donHang.update({
-    where: { maDonHang: req.params.id },
-    data: { trangThai },
-    include: { chiTiet: { include: { mon: true } }, ban: true },
+  const order = await prisma.$transaction(async (tx) => {
+    if (trangThai === "HUY") {
+      await restoreInventoryForOrder(tx, {
+        maDonHang: req.params.id,
+        maNhanVien: req.user?.maNguoiDung,
+      });
+    }
+    return tx.donHang.update({
+      where: { maDonHang: req.params.id },
+      data: { trangThai },
+      include: { chiTiet: { include: { mon: true } }, ban: true },
+    });
   });
 
   // If complete, update table status to waiting for cleanup

@@ -98,13 +98,25 @@ async function main() {
   });
   console.log('✓ Promotions created');
 
+  // ─── Suppliers ──────────────────────────────────
+  const suppliers = [
+    { maNCC: 'NCC_NOI_BO', tenNCC: 'Nội bộ / Bán hàng', congNo: 0, ghiChu: 'Nhà cung cấp mặc định cho xuất kho tự động' },
+    { maNCC: 'NCC_CAFE01', tenNCC: 'Công ty Cà phê Trung Nguyên', congNo: 0, diaChi: 'TP.HCM', soDienThoai: '0281234567', email: 'contact@trungnguyen.com' },
+    { maNCC: 'NCC_SUA01', tenNCC: 'Vinamilk', congNo: 2500000, diaChi: 'Bình Dương', soDienThoai: '0274123456' },
+    { maNCC: 'NCC_TONG01', tenNCC: 'Metro Cash & Carry', congNo: 0, diaChi: 'TP.HCM', soDienThoai: '0289876543' },
+  ];
+  for (const s of suppliers) {
+    await prisma.nhaCungCap.upsert({ where: { maNCC: s.maNCC }, update: {}, create: s });
+  }
+  console.log('✓ Suppliers created');
+
   // ─── Ingredients ─────────────────────────────────
   const ingredients = [
-    { maNguyenLieu: 'NL_CAFE', tenNL: 'Cà phê rang xay', tonKho: 5000, donVi: 'g' },
-    { maNguyenLieu: 'NL_SUA', tenNL: 'Sữa tươi', tonKho: 20000, donVi: 'ml' },
-    { maNguyenLieu: 'NL_DUONG', tenNL: 'Đường', tonKho: 10000, donVi: 'g' },
-    { maNguyenLieu: 'NL_DA', tenNL: 'Đá viên', tonKho: 50000, donVi: 'g' },
-    { maNguyenLieu: 'NL_TRANH', tenNL: 'Trà xanh', tonKho: 3000, donVi: 'g' },
+    { maNguyenLieu: 'NL_CAFE', tenNL: 'Cà phê rang xay', tonKho: 5000, donVi: 'g', tonKhoToiThieu: 500, giaNhap: 120, maNCC: 'NCC_CAFE01' },
+    { maNguyenLieu: 'NL_SUA', tenNL: 'Sữa tươi', tonKho: 20000, donVi: 'ml', tonKhoToiThieu: 2000, giaNhap: 25, maNCC: 'NCC_SUA01' },
+    { maNguyenLieu: 'NL_DUONG', tenNL: 'Đường', tonKho: 10000, donVi: 'g', tonKhoToiThieu: 1000, giaNhap: 15, maNCC: 'NCC_TONG01' },
+    { maNguyenLieu: 'NL_DA', tenNL: 'Đá viên', tonKho: 50000, donVi: 'g', tonKhoToiThieu: 5000, giaNhap: 5, maNCC: 'NCC_NOI_BO' },
+    { maNguyenLieu: 'NL_TRANH', tenNL: 'Trà xanh', tonKho: 3000, donVi: 'g', tonKhoToiThieu: 300, giaNhap: 80, maNCC: 'NCC_TONG01' },
   ];
   for (const ing of ingredients) {
     await prisma.nguyenLieu.upsert({ where: { maNguyenLieu: ing.maNguyenLieu }, update: {}, create: ing });

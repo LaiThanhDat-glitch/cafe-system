@@ -289,6 +289,7 @@ model DonHang {
   tongThanhToan  Decimal? @db.Decimal(18, 2)
   ghiChu         String?  @db.Text
   thongTinGuest  String?  @db.Text
+  daTruKho       Boolean  @default(false)
 
   ban          Ban?            @relation(fields: [maBan], references: [maBan])
   nhanVien     NhanVien?       @relation(fields: [maNhanVien], references: [maNhanVien])
@@ -459,24 +460,37 @@ model DiaChiGiaoHang {
 // ─── INVENTORY ──────────────────────────────────────────────
 
 model NguyenLieu {
-  maNguyenLieu  String  @id @default(cuid())
-  tenNL         String
-  tonKho        Float
-  donVi         String
-  daXoa         Boolean @default(false)
+  maNguyenLieu    String   @id @default(cuid())
+  tenNL           String
+  tonKho          Float
+  donVi           String
+  tonKhoToiThieu  Float    @default(10)
+  giaNhap         Decimal? @db.Decimal(18, 2)
+  maNCC           String?
+  moTa            String?  @db.VarChar(500)
+  daXoa           Boolean  @default(false)
+  ngayCapNhat     DateTime @default(now()) @updatedAt
 
-  dinhMuc       DinhMuc[]
-  chiTietPhieu  ChiTietPhieuKho[]
+  nhaCungCap   NhaCungCap?       @relation(fields: [maNCC], references: [maNCC])
+  dinhMuc      DinhMuc[]
+  chiTietPhieu ChiTietPhieuKho[]
 
   @@map("NguyenLieu")
 }
 
 model NhaCungCap {
-  maNCC   String  @id @default(cuid())
-  tenNCC  String
-  congNo  Decimal @db.Decimal(18, 2)
+  maNCC       String   @id @default(cuid())
+  tenNCC      String
+  congNo      Decimal  @default(0) @db.Decimal(18, 2)
+  diaChi      String?  @db.VarChar(500)
+  soDienThoai String?  @db.VarChar(20)
+  email       String?  @db.VarChar(100)
+  ghiChu      String?  @db.Text
+  daXoa       Boolean  @default(false)
+  ngayTao     DateTime @default(now())
 
-  phieuKho  PhieuKho[]
+  phieuKho    PhieuKho[]
+  nguyenLieu  NguyenLieu[]
 
   @@map("NhaCungCap")
 }
@@ -497,11 +511,13 @@ model PhieuKho {
   maPhieu      String   @id @default(cuid())
   thoiGianLap  DateTime
   tongGiaTri   Decimal  @db.Decimal(18, 2)
-  loaiPhieu    String   // NHAP | XUAT | HUY
-  maNCC        String
+  loaiPhieu    String   // NHAP | XUAT | HUY | BAN_HANG
+  maNCC        String?
   maNhanVien   String
+  maDonHang    String?
+  ghiChu       String?  @db.Text
 
-  nhaCungCap   NhaCungCap        @relation(fields: [maNCC], references: [maNCC])
+  nhaCungCap   NhaCungCap?       @relation(fields: [maNCC], references: [maNCC])
   nhanVien     NhanVien          @relation(fields: [maNhanVien], references: [maNhanVien])
   chiTiet      ChiTietPhieuKho[]
 

@@ -97,11 +97,25 @@ export const kdsAPI = {
 };
 
 export const inventoryAPI = {
-  getIngredients: () => api.get("/inventory/ingredients"),
+  getIngredients: (params) => api.get("/inventory/ingredients", { params }),
   createIngredient: (data) => api.post("/inventory/ingredients", data),
   updateIngredient: (id, data) => api.put(`/inventory/ingredients/${id}`, data),
-  getVouchers: () => api.get("/inventory/vouchers"),
+  deleteIngredient: (id) => api.delete(`/inventory/ingredients/${id}`),
+  getSuppliers: () => api.get("/inventory/suppliers"),
+  createSupplier: (data) => api.post("/inventory/suppliers", data),
+  updateSupplier: (id, data) => api.put(`/inventory/suppliers/${id}`, data),
+  deleteSupplier: (id) => api.delete(`/inventory/suppliers/${id}`),
+  getVouchers: (params) => api.get("/inventory/vouchers", { params }),
+  getVoucher: (id) => api.get(`/inventory/vouchers/${id}`),
   createVoucher: (data) => api.post("/inventory/vouchers", data),
+  getRecipes: (params) => api.get("/inventory/recipes", { params }),
+  createRecipe: (data) => api.post("/inventory/recipes", data),
+  updateRecipe: (id, data) => api.put(`/inventory/recipes/${id}`, data),
+  deleteRecipe: (id) => api.delete(`/inventory/recipes/${id}`),
+  getStockReport: () => api.get("/inventory/reports/stock"),
+  getLowStock: () => api.get("/inventory/reports/low-stock"),
+  getSummary: () => api.get("/inventory/reports/summary"),
+  getHistory: (params) => api.get("/inventory/history", { params }),
 };
 
 export const staffAPI = {
