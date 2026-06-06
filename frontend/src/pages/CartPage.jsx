@@ -38,7 +38,7 @@ export default function CartPage() {
     try {
       const res = await cartAPI.get({ sessionId });
       setCart(res.data);
-      
+
       // Parse ghiChu to notes state
       const initialNotes = {};
       res.data?.chiTietGio?.forEach(c => {
@@ -219,23 +219,21 @@ export default function CartPage() {
 
       // create payment
       const payRes = await paymentAPI.create({
-        maDonHang,
-        phuongThuc: paymentMethod,
+        maDonHang: orderRes.data.maDonHang,
+        phuongThuc: paymentMethod === "COD" ? "TIEN_MAT" : "VNPAY",
         tienKhachDua: tienKhachDua ? Number(tienKhachDua) : undefined,
       });
 
-      // handle VNPAY redirect
-      if (payRes.data?.paymentUrl) {
+      if (payRes.data.paymentUrl) {
         window.location.href = payRes.data.paymentUrl;
-        return;
+      } else {
+        await cartAPI.clear({ sessionId });
+        setCart(null);
+        alert("Đặt hàng thành công!");
+        navigate(`/order/${orderRes.data.maDonHang}`);
       }
-
-      // clear cart
-      await cartAPI.clear({ sessionId });
-      navigate("/account");
-      alert(`Tạo đơn thành công: ${maDonHang}`);
     } catch (err) {
-      alert(err.response?.data?.message || "Lỗi khi tạo đơn");
+      alert(err.response?.data?.message || "Lỗi khi đặt hàng");
     } finally {
       setLoading(false);
     }
@@ -553,15 +551,6 @@ export default function CartPage() {
                   />
                   <span>VNPAY (thanh toán trực tuyến)</span>
                 </label>
-
-                {(paymentMethod === "TIEN_MAT" || paymentMethod === "COD") && (
-                  <input
-                    className="input-field"
-                    placeholder="Tiền khách đưa (tuỳ chọn)"
-                    value={tienKhachDua}
-                    onChange={(e) => setTienKhachDua(e.target.value)}
-                  />
-                )}
               </div>
             </div>
 

@@ -558,7 +558,7 @@ const handleVnpayCallback = asyncHandler(async (req, res) => {
     });
     // Redirect user to frontend order page
     const frontend = process.env.FRONTEND_URL || "http://localhost:5173";
-    return res.redirect(`${frontend}/account`);
+    return res.redirect(`${frontend}/order/${maDonHang}`);
   }
 
   // failed or cancelled

@@ -6,6 +6,7 @@ import MenuPage from "./pages/MenuPage";
 import CartPage from "./pages/CartPage";
 import POSPage from "./pages/POSPage";
 import KDSPage from "./pages/KDSPage";
+import OrderDetailPage from "./pages/OrderDetailPage";
 import DashboardPage from "./pages/DashboardPage";
 import TablePage from "./pages/TablePage";
 import InventoryPage from "./pages/InventoryPage";
@@ -43,6 +44,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/order/:id" element={<OrderDetailPage />} />
 
           <Route
             path="/pos"

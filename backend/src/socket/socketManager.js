@@ -51,6 +51,7 @@ const emitOrderStatusUpdate = (order) => {
     if (order.maBan) {
       ioInstance.to(`table:${order.maBan}`).emit('order:updated', order);
     }
+    ioInstance.to(`order:${order.maDonHang}`).emit('order:updated', order);
   }
 };
 
@@ -63,6 +64,7 @@ const emitOrderComplete = (order) => {
       maBan: order.maBan,
       items: order.chiTiet?.map(c => c.mon?.tenMon)
     });
+    ioInstance.to(`order:${order.maDonHang}`).emit('order:updated', order);
   }
 };
 
