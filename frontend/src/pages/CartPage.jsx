@@ -32,6 +32,15 @@ export default function CartPage() {
   const [tienKhachDua, setTienKhachDua] = useState("");
   const [notes, setNotes] = useState({});
 
+  const useProfileInfo = Boolean(user) && useProfileAddress;
+  const profileGuest = user
+    ? {
+        hoTen: user.hoTen || "",
+        soDienThoai: user.soDienThoai || "",
+        diaChi: user.diaChi || "",
+      }
+    : null;
+
   const sessionId = getSessionId();
 
   const load = async () => {
@@ -41,13 +50,18 @@ export default function CartPage() {
 
       // Parse ghiChu to notes state
       const initialNotes = {};
-      res.data?.chiTietGio?.forEach(c => {
+      res.data?.chiTietGio?.forEach((c) => {
         if (c.ghiChu) {
           initialNotes[c.maChiTietGio] = {
             da: c.ghiChu.match(/Đá: ([^|;]+)/)?.[1]?.trim() || "",
             duong: c.ghiChu.match(/Đường: ([^|;]+)/)?.[1]?.trim() || "",
             size: c.ghiChu.match(/Size: ([^|;]+)/)?.[1]?.trim() || "",
-            text: c.ghiChu.split('|').pop().replace(/Size:.*|Đá:.*|Đường:.*/g, '').trim() || ""
+            text:
+              c.ghiChu
+                .split("|")
+                .pop()
+                .replace(/Size:.*|Đá:.*|Đường:.*/g, "")
+                .trim() || "",
           };
         }
       });
@@ -187,6 +201,21 @@ export default function CartPage() {
       return it;
     });
     const finalAddress = useProfileAddress ? user?.diaChi : diaChi;
+    const customerInfo = useProfileInfo
+      ? {
+          hoTen: profileGuest?.hoTen || "",
+          soDienThoai: profileGuest?.soDienThoai || "",
+          diaChi: profileGuest?.diaChi || null,
+        }
+      : {
+          hoTen:
+            guest.hoTen ||
+            (user ? user.hoTen || "Khách hàng" : "Khách vãng lai"),
+          soDienThoai:
+            guest.soDienThoai || (user ? user.soDienThoai || "" : ""),
+          diaChi: finalAddress || null,
+        };
+
     const findName = (list, code) => {
       if (!code || !list) return null;
       const item = list.find(
@@ -199,9 +228,9 @@ export default function CartPage() {
     const wardName = findName(wards, selectedWard);
 
     const thongTinGuest = JSON.stringify({
-      hoTen: user ? user.hoTen : guest.hoTen || "Khách vãng lai",
-      soDienThoai: user ? user.soDienThoai : guest.soDienThoai || "",
-      diaChi: finalAddress || null,
+      hoTen: customerInfo.hoTen,
+      soDienThoai: customerInfo.soDienThoai,
+      diaChi: customerInfo.diaChi,
       tinh: provinceName || null,
       huyen: districtName || null,
       xa: wardName || null,
@@ -435,22 +464,6 @@ export default function CartPage() {
             <div className="card p-4">
               <h3 className="font-medium mb-2">Thông tin khách</h3>
               <div className="grid grid-cols-1 gap-3">
-                <input
-                  className="input-field"
-                  placeholder="Họ tên (tuỳ chọn)"
-                  value={guest.hoTen}
-                  onChange={(e) =>
-                    setGuest({ ...guest, hoTen: e.target.value })
-                  }
-                />
-                <input
-                  className="input-field"
-                  placeholder="Số điện thoại (tuỳ chọn)"
-                  value={guest.soDienThoai}
-                  onChange={(e) =>
-                    setGuest({ ...guest, soDienThoai: e.target.value })
-                  }
-                />
                 <div>
                   {user ? (
                     <label className="inline-flex items-center gap-2">
@@ -459,72 +472,118 @@ export default function CartPage() {
                         checked={useProfileAddress}
                         onChange={(e) => {
                           setUseProfileAddress(e.target.checked);
-                          if (e.target.checked) setDiaChi(user.diaChi || "");
+                          if (e.target.checked) {
+                            setDiaChi(user.diaChi || "");
+                            setSelectedProvince("");
+                            setSelectedDistrict("");
+                            setSelectedWard("");
+                          }
                         }}
                       />
-                      <span> Dùng địa chỉ trong hồ sơ</span>
+                      <span>Dùng thông tin cá nhân trong hồ sơ</span>
                     </label>
                   ) : null}
                 </div>
 
-                <div className="grid grid-cols-3 gap-2">
-                  <select
-                    className="input-field"
-                    value={selectedProvince}
-                    onChange={(e) => setSelectedProvince(e.target.value)}
-                  >
-                    <option value="">Tỉnh / Thành</option>
-                    {provinces.map((p) => (
-                      <option
-                        key={p.code || p.id || p.Ma}
-                        value={p.code || p.id || p.Ma}
-                      >
-                        {p.name || p.ten || p.Ten}
-                      </option>
-                    ))}
-                  </select>
+                {useProfileInfo ? (
+                  <>
+                    <input
+                      className="input-field"
+                      value={profileGuest?.hoTen || ""}
+                      readOnly
+                    />
+                    <input
+                      className="input-field"
+                      value={profileGuest?.soDienThoai || ""}
+                      readOnly
+                    />
+                    <input
+                      className="input-field"
+                      value={
+                        profileGuest?.diaChi || "Chưa có địa chỉ trong hồ sơ"
+                      }
+                      readOnly
+                    />
+                  </>
+                ) : (
+                  <>
+                    <input
+                      className="input-field"
+                      placeholder="Họ tên (tuỳ chọn)"
+                      value={guest.hoTen}
+                      onChange={(e) =>
+                        setGuest({ ...guest, hoTen: e.target.value })
+                      }
+                    />
+                    <input
+                      className="input-field"
+                      placeholder="Số điện thoại (tuỳ chọn)"
+                      value={guest.soDienThoai}
+                      onChange={(e) =>
+                        setGuest({ ...guest, soDienThoai: e.target.value })
+                      }
+                    />
 
-                  <select
-                    className="input-field"
-                    value={selectedDistrict}
-                    onChange={(e) => setSelectedDistrict(e.target.value)}
-                    disabled={!selectedProvince}
-                  >
-                    <option value="">Quận / Huyện</option>
-                    {districts.map((d) => (
-                      <option
-                        key={d.code || d.id || d.Ma}
-                        value={d.code || d.id || d.Ma}
+                    <div className="grid grid-cols-3 gap-2">
+                      <select
+                        className="input-field"
+                        value={selectedProvince}
+                        onChange={(e) => setSelectedProvince(e.target.value)}
                       >
-                        {d.name || d.ten || d.Ten}
-                      </option>
-                    ))}
-                  </select>
+                        <option value="">Tỉnh / Thành</option>
+                        {provinces.map((p) => (
+                          <option
+                            key={p.code || p.id || p.Ma}
+                            value={p.code || p.id || p.Ma}
+                          >
+                            {p.name || p.ten || p.Ten}
+                          </option>
+                        ))}
+                      </select>
 
-                  <select
-                    className="input-field"
-                    value={selectedWard}
-                    onChange={(e) => setSelectedWard(e.target.value)}
-                    disabled={!selectedDistrict}
-                  >
-                    <option value="">Phường / Xã</option>
-                    {wards.map((w) => (
-                      <option
-                        key={w.code || w.id || w.Ma}
-                        value={w.code || w.id || w.Ma}
+                      <select
+                        className="input-field"
+                        value={selectedDistrict}
+                        onChange={(e) => setSelectedDistrict(e.target.value)}
+                        disabled={!selectedProvince}
                       >
-                        {w.name || w.ten || w.Ten}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                        <option value="">Quận / Huyện</option>
+                        {districts.map((d) => (
+                          <option
+                            key={d.code || d.id || d.Ma}
+                            value={d.code || d.id || d.Ma}
+                          >
+                            {d.name || d.ten || d.Ten}
+                          </option>
+                        ))}
+                      </select>
 
-                <input
-                  className="input-field mt-2"
-                  placeholder="Số nhà, đường, tên tổ/khối (ví dụ: 123 Đường A)"
-                  value={diaChi}
-                  onChange={(e) => setDiaChi(e.target.value)}
-                />
+                      <select
+                        className="input-field"
+                        value={selectedWard}
+                        onChange={(e) => setSelectedWard(e.target.value)}
+                        disabled={!selectedDistrict}
+                      >
+                        <option value="">Phường / Xã</option>
+                        {wards.map((w) => (
+                          <option
+                            key={w.code || w.id || w.Ma}
+                            value={w.code || w.id || w.Ma}
+                          >
+                            {w.name || w.ten || w.Ten}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <input
+                      className="input-field mt-2"
+                      placeholder="Số nhà, đường, tên tổ/khối (ví dụ: 123 Đường A)"
+                      value={diaChi}
+                      onChange={(e) => setDiaChi(e.target.value)}
+                    />
+                  </>
+                )}
               </div>
             </div>
 
