@@ -41,96 +41,96 @@ cafe-system/
 ---
 
 HƯỚNG DẪN CÀI ĐẶT DỰ ÁN
-###1. Yêu cầu môi trường
+### 1. Yêu cầu môi trường
 
-###Cài đặt trước:
+## Cài đặt trước:
 
 Node.js 18+
 MySQL 8.0 hoặc XAMPP
 Git
 
-###Kiểm tra:
+## Kiểm tra:
 
 node -v
 npm -v
 git --version
-###2. Clone dự án
+### 2. Clone dự án
 git clone <repository-url>
 cd cafe-management-system
 
-###Hoặc nếu đã được thêm vào GitHub Repository:
+## Hoặc nếu đã được thêm vào GitHub Repository:
 
 git clone https://github.com/<owner>/<repo>.git
-###3. Cài đặt Backend
+### 3. Cài đặt Backend
 
-###Di chuyển vào thư mục backend:
+## Di chuyển vào thư mục backend:
 
 cd backend
 
-###Cài đặt thư viện:
+## Cài đặt thư viện:
 
 npm install
 
-###Nếu dự án sử dụng VNPAY:
+## Nếu dự án sử dụng VNPAY:
 
 npm install vnpay
-###4. Cấu hình môi trường
+### 4. Cấu hình môi trường
 
 Tạo file .env:
 
 cp .env.example .env
 
-###Mở file .env và cập nhật:
+## Mở file .env và cập nhật:
 
 DATABASE_URL="mysql://root:@localhost:3306/cafe_db"
 JWT_SECRET=your_secret_key
 PORT=3001
-###5. Tạo Database
+### 5. Tạo Database
 
-###Tạo database rỗng:
+## Tạo database rỗng:
 
 CREATE DATABASE cafe_db;
 
-###Có 2 cách khởi tạo dữ liệu:
+## Có 2 cách khởi tạo dữ liệu:
 
-###Cách 1: Dùng Prisma (Khuyến nghị)
+### Cách 1: Dùng Prisma (Khuyến nghị)
 npx prisma generate
 npx prisma db push
 npm run db:seed
-###Cách 2: Import database có sẵn
+### Cách 2: Import database có sẵn
 
-###Import file:
+## Import file:
 
 backend/database/cafe_db.sql
 
-###Sau đó chạy:
+## Sau đó chạy:
 
 npx prisma generate
 
-###Không cần chạy:
+## Không cần chạy:
 
 npx prisma db push
 
-###nếu database đã được import đầy đủ.
+## nếu database đã được import đầy đủ.
 
-###6. Chạy Backend
+### 6. Chạy Backend
 npm run dev
 
-###Backend chạy tại:
+## Backend chạy tại:
 
 http://localhost:3001
-###7. Cài đặt Frontend
+### 7. Cài đặt Frontend
 
-###Mở terminal mới:
+## Mở terminal mới:
 
 cd frontend
 npm install
 
-###Tạo file .env nếu dự án yêu cầu:
+## Tạo file .env nếu dự án yêu cầu:
 
 VITE_API_URL=http://localhost:3001/api
 
-###Chạy frontend:
+## Chạy frontend:
 
 npm run dev
 
