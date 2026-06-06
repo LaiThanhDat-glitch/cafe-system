@@ -213,7 +213,11 @@ export default function CustomerPage() {
               </div>
             )}
             {orders.map((order) => (
-              <div key={order.maDonHang} className="card p-4">
+              <div 
+                key={order.maDonHang} 
+                className="card p-4 cursor-pointer hover:shadow-md hover:border-coffee-300 transition-all active:scale-[0.99]"
+                onClick={() => navigate(`/order/${order.maDonHang}`)}
+              >
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-mono text-sm text-coffee-700">
                     #{order.maDonHang.slice(-8)}
@@ -240,7 +244,7 @@ export default function CustomerPage() {
                   <span>
                     {new Date(order.thoiGianTao).toLocaleString("vi-VN")}
                   </span>
-                  <span className="font-bold text-coffee-800">
+                  <span className="font-bold text-coffee-800 text-sm">
                     {formatVND(order.tongThanhToan || 0)}
                   </span>
                 </div>
