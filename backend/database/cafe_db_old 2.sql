@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2026 at 06:05 AM
+-- Generation Time: Jun 03, 2026 at 06:53 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,17 +38,18 @@ CREATE TABLE `ban` (
 --
 
 INSERT INTO `ban` (`maBan`, `soBan`, `trangThai`) VALUES
-('BAN_A5', 'A5', 'DANG_PHUC_VU'),
+('BAN_A5', 'A5', 'TRONG'),
 ('BAN_B5', 'B5', 'TRONG'),
 ('BAN_C1', 'C1', 'CHO_DON'),
 ('BAN_C2', 'C2', 'TRONG'),
-('BAN_NN', 'Ngoài trời 1', 'CHO_DON'),
+('BAN_NN', 'Ngoài trời 1', 'TRONG'),
 ('BAN_NN2', 'Ngoài trời 2', 'TRONG'),
 ('BAN_NN3', 'Ngoài trời 3', 'TRONG'),
 ('BAN_TQ', 'Tầng 2 - T1', 'TRONG'),
 ('BAN_TQ2', 'Tầng 2 - T2', 'TRONG'),
+('BAN_VIP3', 'VIP3', 'TRONG'),
 ('cmpujia9s00009mapj48pgue6', 'A1', 'TRONG'),
-('cmpujia9w00019mapbk4dzn6p', 'A2', 'DANG_PHUC_VU'),
+('cmpujia9w00019mapbk4dzn6p', 'A2', 'TRONG'),
 ('cmpujiaa200029mapjg02qzan', 'A3', 'TRONG'),
 ('cmpujiaa700039map9wfccpc2', 'A4', 'TRONG'),
 ('cmpujiaaa00049mapw6c81bjz', 'B1', 'TRONG'),
@@ -56,8 +57,7 @@ INSERT INTO `ban` (`maBan`, `soBan`, `trangThai`) VALUES
 ('cmpujiaai00069mapmjipkb39', 'B3', 'TRONG'),
 ('cmpujiaam00079mapyph2lqi4', 'B4', 'TRONG'),
 ('cmpujiaaq00089mapn1506mas', 'VIP1', 'TRONG'),
-('cmpujiaau00099map9yxq4dw3', 'VIP2', 'TRONG'),
-('cmq11u9se0000lbu4val5u0b0', 'D7', 'TRONG');
+('cmpujiaau00099map9yxq4dw3', 'VIP2', 'TRONG');
 
 -- --------------------------------------------------------
 
@@ -106,15 +106,6 @@ CREATE TABLE `calamviec` (
   `maNhanVien` varchar(191) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `calamviec`
---
-
-INSERT INTO `calamviec` (`maCa`, `loaiCa`, `thoiGianVaoCa`, `thoiGianRaCa`, `maNhanVien`) VALUES
-('cmq1qf9hp00013d78w7h2ddi0', 'SANG', '2026-06-06 02:26:39.172', '2026-06-06 02:26:44.835', 'NV_CASHIER01'),
-('cmq1qfsf100033d7871g7e8zm', 'SANG', '2026-06-06 02:27:03.708', '2026-06-06 02:27:06.804', 'NV_BARISTA01'),
-('cmq1qg5vq00053d78lsw2d8fv', 'SANG', '2026-06-06 02:27:21.157', '2026-06-06 02:27:26.597', 'NV_MANAGER01');
-
 -- --------------------------------------------------------
 
 --
@@ -135,22 +126,6 @@ CREATE TABLE `chitietdonhang` (
 --
 
 INSERT INTO `chitietdonhang` (`maChiTiet`, `maDonHang`, `maMon`, `soLuong`, `donGiaThoiDiemBan`, `ghiChu`) VALUES
-('CT_20E5970B', 'DH_71FDDE54', 'MON_CF06', 1, 45000.00, ''),
-('CT_411E71F9', 'DH_863145C6', 'MON_CF06', 1, 45000.00, NULL),
-('CT_44D7968C', 'DH_0ECA6AF1', 'MON_CF06', 1, 45000.00, ''),
-('CT_5DB86096', 'DH_CCE9281F', 'MON_CF07', 1, 40000.00, NULL),
-('CT_6A105969', 'DH_B4C5AAB8', 'MON_CF06', 1, 45000.00, NULL),
-('CT_6ABE0016', 'DH_A6E0E107', 'MON_CF06', 1, 45000.00, NULL),
-('CT_734C3723', 'DH_FE19A6E9', 'MON_CF06', 1, 45000.00, NULL),
-('CT_75CA25A9', 'DH_863145C6', 'MON_CF07', 1, 40000.00, NULL),
-('CT_776F8476', 'DH_42FEBC7A', 'MON_CF06', 1, 45000.00, NULL),
-('CT_823ACDD4', 'DH_CCE9281F', 'MON_CF06', 1, 45000.00, NULL),
-('CT_8A410768', 'DH_936817B7', 'MON_CF08', 1, 60000.00, NULL),
-('CT_A1B13C4D', 'DH_B4C5AAB8', 'MON_CF07', 1, 40000.00, NULL),
-('CT_AC2AE3A1', 'DH_0ECA6AF1', 'MON_CF07', 1, 40000.00, ''),
-('CT_F3BE46DC', 'DH_71FDDE54', 'MON_CF07', 1, 40000.00, ''),
-('CT_F47FA965', 'DH_936817B7', 'MON_CF06', 1, 45000.00, NULL),
-('CT_F53DF83B', 'DH_1C2FD850', 'MON_CF06', 1, 45000.00, NULL),
 ('CT_M01_1', 'DH_M01', 'MON_CF09', 2, 65000.00, NULL),
 ('CT_M01_2', 'DH_M01', 'MON_TR01', 1, 45000.00, NULL),
 ('CT_M04_1', 'DH_M04', 'MON_ML01', 3, 65000.00, NULL),
@@ -189,18 +164,6 @@ CREATE TABLE `chitietgiohang` (
   `soLuong` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `chitietgiohang`
---
-
-INSERT INTO `chitietgiohang` (`maChiTietGio`, `maGioHang`, `maMon`, `soLuong`) VALUES
-(22, 4, 'MON_CF06', 1),
-(23, 4, 'MON_CF07', 1),
-(24, 6, 'MON_CF06', 1),
-(25, 6, 'MON_CF07', 1),
-(28, 9, 'MON_CF06', 1),
-(29, 9, 'MON_CF07', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -213,13 +176,6 @@ CREATE TABLE `chitietphieukho` (
   `soLuongThucTe` double NOT NULL,
   `donGia` decimal(18,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `chitietphieukho`
---
-
-INSERT INTO `chitietphieukho` (`maPhieu`, `maNguyenLieu`, `soLuongThucTe`, `donGia`) VALUES
-('cmq1sdztp0002hbsi9nabr9dz', 'NL_CAFE', 50, 50000.00);
 
 -- --------------------------------------------------------
 
@@ -374,52 +330,41 @@ CREATE TABLE `donhang` (
   `tienGiamGia` decimal(18,2) NOT NULL DEFAULT 0.00,
   `tongThanhToan` decimal(18,2) DEFAULT NULL,
   `ghiChu` text DEFAULT NULL,
-  `thongTinGuest` text DEFAULT NULL,
-  `daTruKho` tinyint(1) NOT NULL DEFAULT 0
+  `thongTinGuest` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `donhang`
 --
 
-INSERT INTO `donhang` (`maDonHang`, `tongTien`, `trangThai`, `thoiGianTao`, `loaiDonHang`, `daDongBo`, `maDonDoiTac`, `soTheRung`, `maBan`, `maNhanVien`, `maKhachHang`, `maKM`, `maMayKDS`, `maMayPOS`, `maDiaChi`, `phiVanChuyen`, `tienGiamGia`, `tongThanhToan`, `ghiChu`, `thongTinGuest`, `daTruKho`) VALUES
-('DH_0ECA6AF1', 85000.00, 'HOAN_THANH', '2026-06-05 13:52:14.586', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 85000.00, '', NULL, 0),
-('DH_1C2FD850', 45000.00, 'HOAN_THANH', '2026-06-03 17:52:35.742', 'MANG_VE', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 45000.00, NULL, '{\"hoTen\":\"Nguyễn Tấn Khiêm\",\"soDienThoai\":\"0819447753\",\"sessionId\":\"sess_5pmva0p\"}', 0),
-('DH_42FEBC7A', 45000.00, 'HOAN_THANH', '2026-06-03 17:42:41.784', 'MANG_VE', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 45000.00, NULL, '{\"hoTen\":\"Khách vãng lai\",\"soDienThoai\":\"\"}', 0),
-('DH_71FDDE54', 85000.00, 'HOAN_THANH', '2026-06-05 13:42:05.432', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 85000.00, '', NULL, 0),
-('DH_863145C6', 85000.00, 'HOAN_THANH', '2026-06-04 08:10:45.626', 'MANG_VE', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 85000.00, NULL, '{\"hoTen\":\"Nguyễn Tấn Đạt \",\"soDienThoai\":\"2345678\",\"diaChi\":\"23\",\"tinh\":null,\"huyen\":null,\"xa\":null,\"sessionId\":\"sess_5pmva0p\"}', 0),
-('DH_936817B7', 105000.00, 'HOAN_THANH', '2026-06-03 18:05:07.869', 'MANG_VE', 0, NULL, NULL, NULL, NULL, 'KH_80A27B02', NULL, NULL, NULL, NULL, 0.00, 0.00, 105000.00, NULL, '{\"hoTen\":\"Khách vãng lai\",\"soDienThoai\":\"\",\"sessionId\":\"sess_5pmva0p\"}', 0),
-('DH_A6E0E107', 45000.00, 'HOAN_THANH', '2026-06-03 17:36:58.607', 'MANG_VE', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 45000.00, NULL, '{\"hoTen\":\"Khách vãng lai\",\"soDienThoai\":\"\"}', 0),
-('DH_B4C5AAB8', 85000.00, 'HOAN_THANH', '2026-06-05 13:36:04.378', 'MANG_VE', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 85000.00, NULL, '{\"hoTen\":\"CÚN CON\",\"soDienThoai\":\"0987654321\",\"diaChi\":\"3483\",\"tinh\":\"Thành phố Hà Nội\",\"huyen\":\"Quận Ba Đình\",\"xa\":\"Phường Phúc Xá\",\"sessionId\":\"sess_5pmva0p\"}', 0),
-('DH_CCE9281F', 85000.00, 'HOAN_THANH', '2026-06-03 17:13:07.746', 'MANG_VE', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 85000.00, NULL, '{\"hoTen\":\"Khách vãng lai\",\"soDienThoai\":\"\"}', 0),
-('DH_FE19A6E9', 45000.00, 'HOAN_THANH', '2026-06-04 08:07:41.509', 'MANG_VE', 0, NULL, NULL, NULL, NULL, 'KH_EB2C3997', NULL, NULL, NULL, NULL, 0.00, 0.00, 45000.00, NULL, '{\"hoTen\":\"Nguyễn Văn A\",\"soDienThoai\":\"0902345678\",\"diaChi\":\"1234567890\",\"tinh\":null,\"huyen\":null,\"xa\":null,\"sessionId\":\"sess_5pmva0p\"}', 0),
-('DH_M01', 185000.00, 'HOAN_THANH', '2026-05-25 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 185000.00, NULL, NULL, 0),
-('DH_M02', 245000.00, 'HOAN_THANH', '2026-05-24 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 245000.00, NULL, NULL, 0),
-('DH_M03', 90000.00, 'HOAN_THANH', '2026-05-23 08:50:42.000', 'MANG_VE', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 90000.00, NULL, NULL, 0),
-('DH_M04', 310000.00, 'HOAN_THANH', '2026-05-22 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 310000.00, NULL, NULL, 0),
-('DH_M05', 155000.00, 'HOAN_THANH', '2026-05-21 08:50:42.000', 'GRAB', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 155000.00, NULL, NULL, 0),
-('DH_M06', 200000.00, 'HOAN_THANH', '2026-05-20 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 200000.00, NULL, NULL, 0),
-('DH_M07', 125000.00, 'HOAN_THANH', '2026-05-19 08:50:42.000', 'SHOPEE', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 125000.00, NULL, NULL, 0),
-('DH_M08', 275000.00, 'HOAN_THANH', '2026-05-18 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 275000.00, NULL, NULL, 0),
-('DH_M09', 95000.00, 'HOAN_THANH', '2026-05-17 08:50:42.000', 'MANG_VE', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 95000.00, NULL, NULL, 0),
-('DH_M10', 340000.00, 'HOAN_THANH', '2026-05-16 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 340000.00, NULL, NULL, 0),
-('DH_M11', 180000.00, 'HOAN_THANH', '2026-05-15 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 180000.00, NULL, NULL, 0),
-('DH_M12', 215000.00, 'HOAN_THANH', '2026-05-14 08:50:42.000', 'GRAB', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 215000.00, NULL, NULL, 0),
-('DH_M13', 145000.00, 'HOAN_THANH', '2026-05-13 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 145000.00, NULL, NULL, 0),
-('DH_M14', 290000.00, 'HOAN_THANH', '2026-05-12 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 290000.00, NULL, NULL, 0),
-('DH_TODAY03', 55000.00, 'HOAN_THANH', '2026-06-01 05:50:42.000', 'MANG_VE', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 55000.00, NULL, NULL, 0),
-('DH_TODAY05', 65000.00, 'HOAN_THANH', '2026-06-01 08:20:42.000', 'TAI_QUAN', 0, NULL, NULL, 'BAN_C1', 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 65000.00, NULL, NULL, 0),
-('DH_TODAY06', 110000.00, 'HOAN_THANH', '2026-06-01 08:40:42.000', 'GRAB', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 110000.00, NULL, NULL, 0),
-('DH_W01', 95000.00, 'HOAN_THANH', '2026-05-31 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 95000.00, NULL, NULL, 0),
-('DH_W02', 145000.00, 'HOAN_THANH', '2026-05-31 08:50:42.000', 'MANG_VE', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 145000.00, NULL, NULL, 0),
-('DH_W03', 200000.00, 'HOAN_THANH', '2026-05-30 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 200000.00, NULL, NULL, 0),
-('DH_W04', 75000.00, 'HOAN_THANH', '2026-05-30 08:50:42.000', 'MANG_VE', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 75000.00, NULL, NULL, 0),
-('DH_W05', 160000.00, 'HOAN_THANH', '2026-05-29 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 160000.00, NULL, NULL, 0),
-('DH_W06', 85000.00, 'HOAN_THANH', '2026-05-29 08:50:42.000', 'GRAB', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 85000.00, NULL, NULL, 0),
-('DH_W07', 220000.00, 'HOAN_THANH', '2026-05-28 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 220000.00, NULL, NULL, 0),
-('DH_W08', 55000.00, 'HOAN_THANH', '2026-05-28 08:50:42.000', 'SHOPEE', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 55000.00, NULL, NULL, 0),
-('DH_W09', 130000.00, 'HOAN_THANH', '2026-05-27 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 130000.00, NULL, NULL, 0),
-('DH_W10', 95000.00, 'HOAN_THANH', '2026-05-26 08:50:42.000', 'MANG_VE', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 95000.00, NULL, NULL, 0);
+INSERT INTO `donhang` (`maDonHang`, `tongTien`, `trangThai`, `thoiGianTao`, `loaiDonHang`, `daDongBo`, `maDonDoiTac`, `soTheRung`, `maBan`, `maNhanVien`, `maKhachHang`, `maKM`, `maMayKDS`, `maMayPOS`, `maDiaChi`, `phiVanChuyen`, `tienGiamGia`, `tongThanhToan`, `ghiChu`, `thongTinGuest`) VALUES
+('DH_M01', 185000.00, 'HOAN_THANH', '2026-05-25 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 185000.00, NULL, NULL),
+('DH_M02', 245000.00, 'HOAN_THANH', '2026-05-24 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 245000.00, NULL, NULL),
+('DH_M03', 90000.00, 'HOAN_THANH', '2026-05-23 08:50:42.000', 'MANG_VE', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 90000.00, NULL, NULL),
+('DH_M04', 310000.00, 'HOAN_THANH', '2026-05-22 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 310000.00, NULL, NULL),
+('DH_M05', 155000.00, 'HOAN_THANH', '2026-05-21 08:50:42.000', 'GRAB', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 155000.00, NULL, NULL),
+('DH_M06', 200000.00, 'HOAN_THANH', '2026-05-20 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 200000.00, NULL, NULL),
+('DH_M07', 125000.00, 'HOAN_THANH', '2026-05-19 08:50:42.000', 'SHOPEE', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 125000.00, NULL, NULL),
+('DH_M08', 275000.00, 'HOAN_THANH', '2026-05-18 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 275000.00, NULL, NULL),
+('DH_M09', 95000.00, 'HOAN_THANH', '2026-05-17 08:50:42.000', 'MANG_VE', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 95000.00, NULL, NULL),
+('DH_M10', 340000.00, 'HOAN_THANH', '2026-05-16 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 340000.00, NULL, NULL),
+('DH_M11', 180000.00, 'HOAN_THANH', '2026-05-15 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 180000.00, NULL, NULL),
+('DH_M12', 215000.00, 'HOAN_THANH', '2026-05-14 08:50:42.000', 'GRAB', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 215000.00, NULL, NULL),
+('DH_M13', 145000.00, 'HOAN_THANH', '2026-05-13 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 145000.00, NULL, NULL),
+('DH_M14', 290000.00, 'HOAN_THANH', '2026-05-12 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 290000.00, NULL, NULL),
+('DH_TODAY03', 55000.00, 'HOAN_THANH', '2026-06-01 05:50:42.000', 'MANG_VE', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 55000.00, NULL, NULL),
+('DH_TODAY05', 65000.00, 'HOAN_THANH', '2026-06-01 08:20:42.000', 'TAI_QUAN', 0, NULL, NULL, 'BAN_C1', 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 65000.00, NULL, NULL),
+('DH_TODAY06', 110000.00, 'HOAN_THANH', '2026-06-01 08:40:42.000', 'GRAB', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 110000.00, NULL, NULL),
+('DH_W01', 95000.00, 'HOAN_THANH', '2026-05-31 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 95000.00, NULL, NULL),
+('DH_W02', 145000.00, 'HOAN_THANH', '2026-05-31 08:50:42.000', 'MANG_VE', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 145000.00, NULL, NULL),
+('DH_W03', 200000.00, 'HOAN_THANH', '2026-05-30 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 200000.00, NULL, NULL),
+('DH_W04', 75000.00, 'HOAN_THANH', '2026-05-30 08:50:42.000', 'MANG_VE', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 75000.00, NULL, NULL),
+('DH_W05', 160000.00, 'HOAN_THANH', '2026-05-29 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 160000.00, NULL, NULL),
+('DH_W06', 85000.00, 'HOAN_THANH', '2026-05-29 08:50:42.000', 'GRAB', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 85000.00, NULL, NULL),
+('DH_W07', 220000.00, 'HOAN_THANH', '2026-05-28 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 220000.00, NULL, NULL),
+('DH_W08', 55000.00, 'HOAN_THANH', '2026-05-28 08:50:42.000', 'SHOPEE', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 55000.00, NULL, NULL),
+('DH_W09', 130000.00, 'HOAN_THANH', '2026-05-27 08:50:42.000', 'TAI_QUAN', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 130000.00, NULL, NULL),
+('DH_W10', 95000.00, 'HOAN_THANH', '2026-05-26 08:50:42.000', 'MANG_VE', 0, NULL, NULL, NULL, 'NV_CASHIER01', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 95000.00, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -477,21 +422,6 @@ CREATE TABLE `giohang` (
   `ngayTao` datetime(3) NOT NULL DEFAULT current_timestamp(3)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `giohang`
---
-
-INSERT INTO `giohang` (`maGioHang`, `maNguoiDung`, `sessionId`, `ngayTao`) VALUES
-(1, 'KH_80A27B02', NULL, '2026-06-03 17:13:02.704'),
-(2, NULL, 'sess_5pmva0p', '2026-06-03 17:44:10.517'),
-(3, 'NV_MANAGER01', NULL, '2026-06-03 17:45:46.076'),
-(4, 'KH_EB2C3997', NULL, '2026-06-04 07:22:14.952'),
-(5, NULL, NULL, '2026-06-05 13:42:05.468'),
-(6, 'NV_CASHIER01', NULL, '2026-06-05 13:51:03.199'),
-(7, NULL, NULL, '2026-06-05 13:52:14.633'),
-(8, 'NV_BARISTA01', NULL, '2026-06-05 14:39:36.347'),
-(9, 'KH_2C707BAC', NULL, '2026-06-05 14:50:34.591');
-
 -- --------------------------------------------------------
 
 --
@@ -505,15 +435,6 @@ CREATE TABLE `hinhanhmon` (
   `laAnhChinh` tinyint(1) NOT NULL DEFAULT 0,
   `thuTu` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `hinhanhmon`
---
-
-INSERT INTO `hinhanhmon` (`maHinhAnh`, `maMon`, `urlAnh`, `laAnhChinh`, `thuTu`) VALUES
-(5, 'MON_CF08', 'https://static.jewishnews.co.uk/jewishnews/uploads/2024/12/Partners-Flat-White-FT-BLOG0523-b11f6273c2d84462954c2163d6a1076d-640x400.jpg', 1, 0),
-(6, 'MON_CF09', 'https://bluorecoffee.com/cdn/shop/articles/a-high-resolution-close-up-photograph-of-a-tall-glass-of-vietnamese-coconut-coffee-c-ph-c-t-d-a-on-a-rustic-wooden-table-the-drink-shows-two-distinct-layers-rich-dark-brewed-robusta-c.png?v=1754873263&width=1100', 1, 0),
-(7, 'MON_CF07', 'https://www.thespruceeats.com/thmb/HJrjMfXdLGHbgMhnM0fMkDx9XPQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/what-is-espresso-765702-hero-03_cropped-ffbc0c7cf45a46ff846843040c8f370c.jpg', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -532,9 +453,6 @@ CREATE TABLE `khachhang` (
 --
 
 INSERT INTO `khachhang` (`maKhachHang`, `hoTen`, `soDienThoai`) VALUES
-('KH_2C707BAC', 'TRương Thành Đẹc', '0912345676'),
-('KH_80A27B02', 'Nguyễn Tấn Khiêm', '0819447753'),
-('KH_EB2C3997', 'Nguyễn Văn A', '0902345678'),
 ('KH_GUEST01', 'Khách lẻ 1', '0900000001'),
 ('KH_GUEST02', 'Khách lẻ 2', '0900000002'),
 ('KH_GUEST03', 'Nguyễn Văn An', '0901234567'),
@@ -553,15 +471,6 @@ CREATE TABLE `khachthanhvien` (
   `diemThuong` int(11) NOT NULL DEFAULT 0,
   `ngayDangKy` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `khachthanhvien`
---
-
-INSERT INTO `khachthanhvien` (`maKhachHang`, `hangThanhVien`, `diemThuong`, `ngayDangKy`) VALUES
-('KH_2C707BAC', NULL, 0, '2026-06-05'),
-('KH_80A27B02', NULL, 0, '2026-06-03'),
-('KH_EB2C3997', NULL, 0, '2026-06-04');
 
 -- --------------------------------------------------------
 
@@ -619,47 +528,48 @@ CREATE TABLE `mon` (
   `moTa` text DEFAULT NULL,
   `diemDanhGia` double NOT NULL DEFAULT 0,
   `isNoiBat` tinyint(1) NOT NULL DEFAULT 0,
-  `ngayTao` datetime(3) NOT NULL DEFAULT current_timestamp(3)
+  `ngayTao` datetime(3) NOT NULL DEFAULT current_timestamp(3),
+  `hinhAnh` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `mon`
 --
 
-INSERT INTO `mon` (`maMon`, `tenMon`, `giaBan`, `maDanhMuc`, `daXoa`, `slug`, `moTa`, `diemDanhGia`, `isNoiBat`, `ngayTao`) VALUES
-('MON_CF01', 'Cà Phê Đen', 25000.00, 'cat-cf', 0, 'ca-phe-den', 'Cà phê đen đậm đà, pha phin truyền thống', 0, 1, '2026-06-01 01:38:39.566'),
-('MON_CF02', 'Cà Phê Sữa', 35000.00, 'cat-cf', 0, 'ca-phe-sua', 'Cà phê sữa thơm ngon, béo ngậy', 0, 0, '2026-06-01 01:38:39.570'),
-('MON_CF03', 'Cà Phê Latte', 55000.00, 'cat-cf', 0, 'ca-phe-latte', 'Latte với sữa hấp mịn và lớp bọt sữa', 0, 1, '2026-06-01 01:38:39.580'),
-('MON_CF04', 'Cappuccino', 60000.00, 'cat-cf', 0, 'cappuccino', 'Cappuccino cân bằng espresso và sữa', 0, 0, '2026-06-01 01:38:39.584'),
-('MON_CF05', 'Cold Brew', 65000.00, 'cat-cf', 0, 'cold-brew', 'Ủ lạnh 24 giờ, hương vị đậm đà, ít đắng', 0, 0, '2026-06-01 01:38:39.589'),
-('MON_CF06', 'Americano', 45000.00, 'cat-cf', 0, 'americano', 'Espresso pha loãng với nước nóng', 4.3, 1, '2026-06-01 08:50:41.927'),
-('MON_CF07', 'Espresso', 40000.00, 'cat-cf', 1, 'espresso', 'Espresso nguyên chất, đậm đặc', 4.4, 0, '2026-06-01 08:50:41.927'),
-('MON_CF08', 'Flat White', 60000.00, 'cat-cf', 0, 'flat-white', 'Espresso đôi với sữa hấp mịn, ít bọt', 4.5, 0, '2026-06-01 08:50:41.927'),
-('MON_CF09', 'Cà Phê Cốt Dừa', 65000.00, 'cat-cf', 0, 'ca-phe-cot-dua', 'Cà phê kết hợp nước cốt dừa béo ngậy', 4.8, 1, '2026-06-01 08:50:41.927'),
-('MON_CF10', 'Bạc Xỉu', 38000.00, 'cat-cf', 0, 'bac-xiu', 'Cà phê sữa nhiều sữa ít cà phê, đặc trưng Sài Gòn', 4.6, 1, '2026-06-01 08:50:41.927'),
-('MON_CK01', 'Cheesecake Dâu', 70000.00, 'cat-cake', 0, 'cheesecake-dau', 'Cheesecake New York với topping dâu tây tươi', 4.9, 1, '2026-06-01 08:50:41.927'),
-('MON_CK02', 'Bánh Brownie', 50000.00, 'cat-cake', 0, 'banh-brownie', 'Brownie chocolate đậm đặc, fudgy', 4.7, 0, '2026-06-01 08:50:41.927'),
-('MON_CK03', 'Macaron', 55000.00, 'cat-cake', 0, 'macaron', 'Macaron Pháp nhiều màu sắc, nhân kem mịn', 4.6, 0, '2026-06-01 08:50:41.927'),
-('MON_CK04', 'Bánh Tart Trứng', 35000.00, 'cat-cake', 0, 'banh-tart-trung', 'Bánh tart trứng kiểu Bồ Đào Nha', 4.8, 1, '2026-06-01 08:50:41.927'),
-('MON_FD01', 'Bánh Croissant', 40000.00, 'cat-fd', 0, 'banh-croissant', NULL, 0, 0, '2026-06-01 01:38:39.608'),
-('MON_FD02', 'Tiramisu', 65000.00, 'cat-fd', 0, 'tiramisu', NULL, 0, 1, '2026-06-01 01:38:39.612'),
-('MON_FD03', 'Bánh Mì Sandwich', 45000.00, 'cat-fd', 0, 'banh-mi-sandwich', 'Sandwich với rau tươi và sốt đặc biệt', 4.3, 0, '2026-06-01 08:50:41.927'),
-('MON_FD04', 'Khoai Tây Chiên', 35000.00, 'cat-fd', 0, 'khoai-tay-chien', 'Khoai tây chiên giòn ăn kèm tương ớt', 4.2, 0, '2026-06-01 08:50:41.927'),
-('MON_FD05', 'Bánh Waffle', 55000.00, 'cat-fd', 0, 'banh-waffle', 'Waffle giòn ăn kèm whipping cream và mứt dâu', 4.7, 1, '2026-06-01 08:50:41.927'),
-('MON_ML01', 'Milkshake Chocolate', 65000.00, 'cat-ml', 0, 'milkshake-choco', 'Milkshake chocolate đậm đà, béo ngậy', 4.8, 1, '2026-06-01 08:50:41.927'),
-('MON_ML02', 'Milkshake Dâu', 60000.00, 'cat-ml', 0, 'milkshake-dau', 'Milkshake dâu tây hồng đẹp mắt', 4.6, 0, '2026-06-01 08:50:41.927'),
-('MON_ML03', 'Milkshake Vanilla', 60000.00, 'cat-ml', 0, 'milkshake-vanilla', 'Milkshake vanilla thơm dịu cổ điển', 4.5, 0, '2026-06-01 08:50:41.927'),
-('MON_SM01', 'Sinh Tố Xoài', 50000.00, 'cat-sm', 0, 'sinh-to-xoai', NULL, 0, 1, '2026-06-01 01:38:39.601'),
-('MON_SM02', 'Sinh Tố Bơ', 55000.00, 'cat-sm', 0, 'sinh-to-bo', NULL, 0, 0, '2026-06-01 01:38:39.604'),
-('MON_SM03', 'Sinh Tố Dâu', 50000.00, 'cat-sm', 0, 'sinh-to-dau', 'Sinh tố dâu tây tươi chua ngọt', 4.5, 0, '2026-06-01 08:50:41.927'),
-('MON_SM04', 'Sinh Tố Chuối', 45000.00, 'cat-sm', 0, 'sinh-to-chuoi', 'Sinh tố chuối mật mịn bổ dưỡng', 4.3, 0, '2026-06-01 08:50:41.927'),
-('MON_SM05', 'Sinh Tố Mãng Cầu', 55000.00, 'cat-sm', 0, 'sinh-to-mang-cau', 'Sinh tố mãng cầu thơm ngon đặc biệt', 4.6, 0, '2026-06-01 08:50:41.927'),
-('MON_TR01', 'Trà Đào', 45000.00, 'cat-tr', 0, 'tra-dao', 'Trà đào cam sả thơm mát', 0, 0, '2026-06-01 01:38:39.593'),
-('MON_TR02', 'Trà Chanh', 30000.00, 'cat-tr', 0, 'tra-chanh', NULL, 0, 0, '2026-06-01 01:38:39.596'),
-('MON_TR03', 'Trà Sữa Trân Châu', 55000.00, 'cat-tr', 0, 'tra-sua-tran-chau', 'Trà sữa đài loan với trân châu đen dẻo', 4.8, 1, '2026-06-01 08:50:41.927'),
-('MON_TR04', 'Trà Ô Long', 50000.00, 'cat-tr', 0, 'tra-o-long', 'Trà ô long thơm dịu, tốt cho sức khỏe', 4.5, 0, '2026-06-01 08:50:41.927'),
-('MON_TR05', 'Trà Xanh Latte', 55000.00, 'cat-tr', 0, 'tra-xanh-latte', 'Matcha latte mịn màng với sữa hấp', 4.6, 1, '2026-06-01 08:50:41.927'),
-('MON_TR06', 'Trà Vải', 45000.00, 'cat-tr', 0, 'tra-vai', 'Trà vải hương thơm đặc trưng', 4.4, 0, '2026-06-01 08:50:41.927');
+INSERT INTO `mon` (`maMon`, `tenMon`, `giaBan`, `maDanhMuc`, `daXoa`, `slug`, `moTa`, `diemDanhGia`, `isNoiBat`, `ngayTao`, `hinhAnh`) VALUES
+('MON_CF01', 'Cà Phê Đen', 25000.00, 'cat-cf', 0, 'ca-phe-den', 'Cà phê đen đậm đà, pha phin truyền thống', 0, 1, '2026-06-01 01:38:39.566', NULL),
+('MON_CF02', 'Cà Phê Sữa', 35000.00, 'cat-cf', 0, 'ca-phe-sua', 'Cà phê sữa thơm ngon, béo ngậy', 0, 0, '2026-06-01 01:38:39.570', NULL),
+('MON_CF03', 'Cà Phê Latte', 55000.00, 'cat-cf', 0, 'ca-phe-latte', 'Latte với sữa hấp mịn và lớp bọt sữa', 0, 1, '2026-06-01 01:38:39.580', NULL),
+('MON_CF04', 'Cappuccino', 60000.00, 'cat-cf', 0, 'cappuccino', 'Cappuccino cân bằng espresso và sữa', 0, 0, '2026-06-01 01:38:39.584', NULL),
+('MON_CF05', 'Cold Brew', 65000.00, 'cat-cf', 0, 'cold-brew', 'Ủ lạnh 24 giờ, hương vị đậm đà, ít đắng', 0, 0, '2026-06-01 01:38:39.589', NULL),
+('MON_CF06', 'Americano', 45000.00, 'cat-cf', 0, 'americano', 'Espresso pha loãng với nước nóng', 4.3, 0, '2026-06-01 08:50:41.927', NULL),
+('MON_CF07', 'Espresso', 40000.00, 'cat-cf', 0, 'espresso', 'Espresso nguyên chất, đậm đặc', 4.4, 0, '2026-06-01 08:50:41.927', NULL),
+('MON_CF08', 'Flat White', 60000.00, 'cat-cf', 0, 'flat-white', 'Espresso đôi với sữa hấp mịn, ít bọt', 4.5, 0, '2026-06-01 08:50:41.927', NULL),
+('MON_CF09', 'Cà Phê Cốt Dừa', 65000.00, 'cat-cf', 0, 'ca-phe-cot-dua', 'Cà phê kết hợp nước cốt dừa béo ngậy', 4.8, 1, '2026-06-01 08:50:41.927', NULL),
+('MON_CF10', 'Bạc Xỉu', 38000.00, 'cat-cf', 0, 'bac-xiu', 'Cà phê sữa nhiều sữa ít cà phê, đặc trưng Sài Gòn', 4.6, 1, '2026-06-01 08:50:41.927', NULL),
+('MON_CK01', 'Cheesecake Dâu', 70000.00, 'cat-cake', 0, 'cheesecake-dau', 'Cheesecake New York với topping dâu tây tươi', 4.9, 1, '2026-06-01 08:50:41.927', NULL),
+('MON_CK02', 'Bánh Brownie', 50000.00, 'cat-cake', 0, 'banh-brownie', 'Brownie chocolate đậm đặc, fudgy', 4.7, 0, '2026-06-01 08:50:41.927', NULL),
+('MON_CK03', 'Macaron', 55000.00, 'cat-cake', 0, 'macaron', 'Macaron Pháp nhiều màu sắc, nhân kem mịn', 4.6, 0, '2026-06-01 08:50:41.927', NULL),
+('MON_CK04', 'Bánh Tart Trứng', 35000.00, 'cat-cake', 0, 'banh-tart-trung', 'Bánh tart trứng kiểu Bồ Đào Nha', 4.8, 1, '2026-06-01 08:50:41.927', NULL),
+('MON_FD01', 'Bánh Croissant', 40000.00, 'cat-fd', 0, 'banh-croissant', NULL, 0, 0, '2026-06-01 01:38:39.608', NULL),
+('MON_FD02', 'Tiramisu', 65000.00, 'cat-fd', 0, 'tiramisu', NULL, 0, 1, '2026-06-01 01:38:39.612', NULL),
+('MON_FD03', 'Bánh Mì Sandwich', 45000.00, 'cat-fd', 0, 'banh-mi-sandwich', 'Sandwich với rau tươi và sốt đặc biệt', 4.3, 0, '2026-06-01 08:50:41.927', NULL),
+('MON_FD04', 'Khoai Tây Chiên', 35000.00, 'cat-fd', 0, 'khoai-tay-chien', 'Khoai tây chiên giòn ăn kèm tương ớt', 4.2, 0, '2026-06-01 08:50:41.927', NULL),
+('MON_FD05', 'Bánh Waffle', 55000.00, 'cat-fd', 0, 'banh-waffle', 'Waffle giòn ăn kèm whipping cream và mứt dâu', 4.7, 1, '2026-06-01 08:50:41.927', NULL),
+('MON_ML01', 'Milkshake Chocolate', 65000.00, 'cat-ml', 0, 'milkshake-choco', 'Milkshake chocolate đậm đà, béo ngậy', 4.8, 1, '2026-06-01 08:50:41.927', NULL),
+('MON_ML02', 'Milkshake Dâu', 60000.00, 'cat-ml', 0, 'milkshake-dau', 'Milkshake dâu tây hồng đẹp mắt', 4.6, 0, '2026-06-01 08:50:41.927', NULL),
+('MON_ML03', 'Milkshake Vanilla', 60000.00, 'cat-ml', 0, 'milkshake-vanilla', 'Milkshake vanilla thơm dịu cổ điển', 4.5, 0, '2026-06-01 08:50:41.927', NULL),
+('MON_SM01', 'Sinh Tố Xoài', 50000.00, 'cat-sm', 0, 'sinh-to-xoai', NULL, 0, 1, '2026-06-01 01:38:39.601', NULL),
+('MON_SM02', 'Sinh Tố Bơ', 55000.00, 'cat-sm', 0, 'sinh-to-bo', NULL, 0, 0, '2026-06-01 01:38:39.604', NULL),
+('MON_SM03', 'Sinh Tố Dâu', 50000.00, 'cat-sm', 0, 'sinh-to-dau', 'Sinh tố dâu tây tươi chua ngọt', 4.5, 0, '2026-06-01 08:50:41.927', NULL),
+('MON_SM04', 'Sinh Tố Chuối', 45000.00, 'cat-sm', 0, 'sinh-to-chuoi', 'Sinh tố chuối mật mịn bổ dưỡng', 4.3, 0, '2026-06-01 08:50:41.927', NULL),
+('MON_SM05', 'Sinh Tố Mãng Cầu', 55000.00, 'cat-sm', 0, 'sinh-to-mang-cau', 'Sinh tố mãng cầu thơm ngon đặc biệt', 4.6, 0, '2026-06-01 08:50:41.927', NULL),
+('MON_TR01', 'Trà Đào', 45000.00, 'cat-tr', 0, 'tra-dao', 'Trà đào cam sả thơm mát', 0, 0, '2026-06-01 01:38:39.593', NULL),
+('MON_TR02', 'Trà Chanh', 30000.00, 'cat-tr', 0, 'tra-chanh', NULL, 0, 0, '2026-06-01 01:38:39.596', NULL),
+('MON_TR03', 'Trà Sữa Trân Châu', 55000.00, 'cat-tr', 0, 'tra-sua-tran-chau', 'Trà sữa đài loan với trân châu đen dẻo', 4.8, 1, '2026-06-01 08:50:41.927', NULL),
+('MON_TR04', 'Trà Ô Long', 50000.00, 'cat-tr', 0, 'tra-o-long', 'Trà ô long thơm dịu, tốt cho sức khỏe', 4.5, 0, '2026-06-01 08:50:41.927', NULL),
+('MON_TR05', 'Trà Xanh Latte', 55000.00, 'cat-tr', 0, 'tra-xanh-latte', 'Matcha latte mịn màng với sữa hấp', 4.6, 1, '2026-06-01 08:50:41.927', NULL),
+('MON_TR06', 'Trà Vải', 45000.00, 'cat-tr', 0, 'tra-vai', 'Trà vải hương thơm đặc trưng', 4.4, 0, '2026-06-01 08:50:41.927', NULL);
 
 -- --------------------------------------------------------
 
@@ -690,9 +600,6 @@ CREATE TABLE `nguoidung` (
 --
 
 INSERT INTO `nguoidung` (`maNguoiDung`, `hoTen`, `diaChi`, `soDienThoai`, `matKhau`, `email`, `supabaseId`, `authProvider`, `avatarUrl`, `ngaySinh`, `gioiTinh`, `verificationToken`, `forgetToken`, `ngayTao`, `isDeleted`) VALUES
-('KH_2C707BAC', 'TRương Thành Đẹc', '11 nhà xí , Xã Pả Vi, Huyện Mèo Vạc, Tỉnh Hà Giang', '0912345676', '$2a$10$v.KtsuY57aENjqMLmWsidOVpIdY8gKvz4rXj.tVMvO.33fOyQfZo.', 'deccuti@cafe.vn ', NULL, 'LOCAL', NULL, '2020-02-18', 'Nữ', NULL, NULL, '2026-06-05 14:50:02.672', 0),
-('KH_80A27B02', 'Nguyễn Tấn Khiêm', NULL, '0819447753', '$2a$10$O5aJWE8NE/4KtRUGk05Aoe4Lh70.SYuhUY8PwAojIqr.rDSrDx/5m', 'hsntk1610@gmail.com', NULL, 'LOCAL', NULL, NULL, NULL, NULL, NULL, '2026-06-03 17:08:44.501', 0),
-('KH_EB2C3997', 'Nguyễn Văn A', '12758245377334, Xã Cư KBang, Huyện Ea Súp, Tỉnh Đắk Lắk', '0902345678', '$2a$10$i1qrJVDUZc8PQW38ElQOFusMSxGCivycQScnbKhy2eQIEKG/F912m', 'customer@cafe.vn', NULL, 'LOCAL', NULL, '2008-06-04', 'Nam', NULL, NULL, '2026-06-04 07:20:16.078', 0),
 ('KH_GUEST01', 'Khách lẻ 1', NULL, '0900000001', NULL, NULL, NULL, 'LOCAL', NULL, NULL, NULL, NULL, NULL, '2026-06-01 08:50:42.000', 0),
 ('KH_GUEST02', 'Khách lẻ 2', NULL, '0900000002', NULL, NULL, NULL, 'LOCAL', NULL, NULL, NULL, NULL, NULL, '2026-06-01 08:50:42.000', 0),
 ('KH_GUEST03', 'Nguyễn Văn An', NULL, '0901234567', NULL, NULL, NULL, 'LOCAL', NULL, NULL, NULL, NULL, NULL, '2026-06-01 08:50:42.000', 0),
@@ -700,7 +607,7 @@ INSERT INTO `nguoidung` (`maNguoiDung`, `hoTen`, `diaChi`, `soDienThoai`, `matKh
 ('KH_GUEST05', 'Lê Minh Tuấn', NULL, '0912345678', NULL, NULL, NULL, 'LOCAL', NULL, NULL, NULL, NULL, NULL, '2026-06-01 08:50:42.000', 0),
 ('NV_BARISTA01', 'Lê Pha Chế', NULL, NULL, '$2a$10$TH5fHRnuO7gtS.ZsB.Bz9etDXzlgnNAcJK3JFerLPjujphWYwiYNa', 'barista@cafe.vn', NULL, 'LOCAL', NULL, NULL, NULL, NULL, NULL, '2026-06-01 01:38:39.535', 0),
 ('NV_CASHIER01', 'Trần Thu Ngân', NULL, NULL, '$2a$10$TH5fHRnuO7gtS.ZsB.Bz9etDXzlgnNAcJK3JFerLPjujphWYwiYNa', 'cashier@cafe.vn', NULL, 'LOCAL', NULL, NULL, NULL, NULL, NULL, '2026-06-01 01:38:39.519', 0),
-('NV_MANAGER01', 'Nguyễn Quản Lý', 'Đội 8 thôn Hoà Mỹ, Xã Hành Phước, Huyện Nghĩa Hành, Tỉnh Quảng Ngãi', NULL, '$2a$10$TH5fHRnuO7gtS.ZsB.Bz9etDXzlgnNAcJK3JFerLPjujphWYwiYNa', 'manager@cafe.vn', NULL, 'LOCAL', NULL, '2022-06-04', 'Nam', NULL, NULL, '2026-06-01 01:38:39.499', 0);
+('NV_MANAGER01', 'Nguyễn Quản Lý', NULL, NULL, '$2a$10$TH5fHRnuO7gtS.ZsB.Bz9etDXzlgnNAcJK3JFerLPjujphWYwiYNa', 'manager@cafe.vn', NULL, 'LOCAL', NULL, NULL, NULL, NULL, NULL, '2026-06-01 01:38:39.499', 0);
 
 -- --------------------------------------------------------
 
@@ -713,40 +620,35 @@ CREATE TABLE `nguyenlieu` (
   `tenNL` varchar(191) NOT NULL,
   `tonKho` double NOT NULL,
   `donVi` varchar(191) NOT NULL,
-  `daXoa` tinyint(1) NOT NULL DEFAULT 0,
-  `giaNhap` decimal(18,2) DEFAULT NULL,
-  `maNCC` varchar(191) DEFAULT NULL,
-  `moTa` varchar(500) DEFAULT NULL,
-  `ngayCapNhat` datetime(3) NOT NULL DEFAULT current_timestamp(3),
-  `tonKhoToiThieu` double NOT NULL DEFAULT 10
+  `daXoa` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `nguyenlieu`
 --
 
-INSERT INTO `nguyenlieu` (`maNguyenLieu`, `tenNL`, `tonKho`, `donVi`, `daXoa`, `giaNhap`, `maNCC`, `moTa`, `ngayCapNhat`, `tonKhoToiThieu`) VALUES
-('NL_BANH_MY', 'Bánh mì sandwich', 500, 'cái', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_BO', 'Quả bơ', 5000, 'g', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_BOT_MY', 'Bột mì', 10000, 'g', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_CAFE', 'Cà phê rang xay', 5050, 'g', 0, NULL, NULL, NULL, '2026-06-06 03:21:39.236', 10),
-('NL_CHOCO', 'Bột chocolate', 2000, 'g', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_CHUOI', 'Chuối', 6000, 'g', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_DA', 'Đá viên', 50000, 'g', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_DAU', 'Dâu tây', 4000, 'g', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_DUONG', 'Đường', 10000, 'g', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_KEM', 'Kem tươi whipping', 5000, 'ml', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_MASCA', 'Mascarpone cheese', 2000, 'g', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_SUA', 'Sữa tươi', 20000, 'ml', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_SUA_DC', 'Sữa đặc', 10000, 'ml', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_SUA_TT', 'Sữa tươi', 20000, 'ml', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_TC_DEN', 'Trân châu đen', 3000, 'g', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_TRA_ĐAO', 'Siro đào', 5000, 'ml', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_TRA_OL', 'Trà ô long', 3000, 'g', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_TRA_XH', 'Trà xanh (matcha)', 2000, 'g', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_TRANH', 'Trà xanh', 3000, 'g', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_TRUNG', 'Trứng gà', 1000, 'quả', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10),
-('NL_XOAI', 'Xoài tươi', 8000, 'g', 0, NULL, NULL, NULL, '2026-06-06 10:06:35.520', 10);
+INSERT INTO `nguyenlieu` (`maNguyenLieu`, `tenNL`, `tonKho`, `donVi`, `daXoa`) VALUES
+('NL_BANH_MY', 'Bánh mì sandwich', 500, 'cái', 0),
+('NL_BO', 'Quả bơ', 5000, 'g', 0),
+('NL_BOT_MY', 'Bột mì', 10000, 'g', 0),
+('NL_CAFE', 'Cà phê rang xay', 5000, 'g', 0),
+('NL_CHOCO', 'Bột chocolate', 2000, 'g', 0),
+('NL_CHUOI', 'Chuối', 6000, 'g', 0),
+('NL_DA', 'Đá viên', 50000, 'g', 0),
+('NL_DAU', 'Dâu tây', 4000, 'g', 0),
+('NL_DUONG', 'Đường', 10000, 'g', 0),
+('NL_KEM', 'Kem tươi whipping', 5000, 'ml', 0),
+('NL_MASCA', 'Mascarpone cheese', 2000, 'g', 0),
+('NL_SUA', 'Sữa tươi', 20000, 'ml', 0),
+('NL_SUA_DC', 'Sữa đặc', 10000, 'ml', 0),
+('NL_SUA_TT', 'Sữa tươi', 20000, 'ml', 0),
+('NL_TC_DEN', 'Trân châu đen', 3000, 'g', 0),
+('NL_TRA_ĐAO', 'Siro đào', 5000, 'ml', 0),
+('NL_TRA_OL', 'Trà ô long', 3000, 'g', 0),
+('NL_TRA_XH', 'Trà xanh (matcha)', 2000, 'g', 0),
+('NL_TRANH', 'Trà xanh', 3000, 'g', 0),
+('NL_TRUNG', 'Trứng gà', 1000, 'quả', 0),
+('NL_XOAI', 'Xoài tươi', 8000, 'g', 0);
 
 -- --------------------------------------------------------
 
@@ -757,27 +659,18 @@ INSERT INTO `nguyenlieu` (`maNguyenLieu`, `tenNL`, `tonKho`, `donVi`, `daXoa`, `
 CREATE TABLE `nhacungcap` (
   `maNCC` varchar(191) NOT NULL,
   `tenNCC` varchar(191) NOT NULL,
-  `congNo` decimal(18,2) NOT NULL DEFAULT 0.00,
-  `daXoa` tinyint(1) NOT NULL DEFAULT 0,
-  `diaChi` varchar(500) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `ghiChu` text DEFAULT NULL,
-  `ngayTao` datetime(3) NOT NULL DEFAULT current_timestamp(3),
-  `soDienThoai` varchar(20) DEFAULT NULL
+  `congNo` decimal(18,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `nhacungcap`
 --
 
-INSERT INTO `nhacungcap` (`maNCC`, `tenNCC`, `congNo`, `daXoa`, `diaChi`, `email`, `ghiChu`, `ngayTao`, `soDienThoai`) VALUES
-('NCC_BANH01', 'Xưởng Bánh Ngọt Hương Vị', 0.00, 0, NULL, NULL, NULL, '2026-06-06 10:06:35.528', NULL),
-('NCC_CAFE01', 'Công ty Cà phê Trung Nguyên', 0.00, 0, 'TP.HCM', 'contact@trungnguyen.com', NULL, '2026-06-06 03:09:09.057', '0281234567'),
-('NCC_CF01', 'Công ty Cà Phê Trung Nguyên', 2500000.00, 0, NULL, NULL, NULL, '2026-06-06 10:06:35.528', NULL),
-('NCC_NOI_BO', 'Nội bộ / Bán hàng', 0.00, 0, NULL, NULL, 'Nhà cung cấp mặc định cho xuất kho tự động', '2026-06-06 03:09:09.049', NULL),
-('NCC_RAU01', 'Chợ Đầu Mối Nông Sản Thủ Đức', 0.00, 0, NULL, NULL, NULL, '2026-06-06 10:06:35.528', NULL),
-('NCC_SUA01', 'Công ty Sữa Vinamilk', 0.00, 0, NULL, NULL, NULL, '2026-06-06 10:06:35.528', NULL),
-('NCC_TONG01', 'Metro Cash & Carry', 0.00, 0, 'TP.HCM', NULL, NULL, '2026-06-06 03:09:09.067', '0289876543');
+INSERT INTO `nhacungcap` (`maNCC`, `tenNCC`, `congNo`) VALUES
+('NCC_BANH01', 'Xưởng Bánh Ngọt Hương Vị', 0.00),
+('NCC_CF01', 'Công ty Cà Phê Trung Nguyên', 0.00),
+('NCC_RAU01', 'Chợ Đầu Mối Nông Sản Thủ Đức', 0.00),
+('NCC_SUA01', 'Công ty Sữa Vinamilk', 0.00);
 
 -- --------------------------------------------------------
 
@@ -811,18 +704,9 @@ CREATE TABLE `phieukho` (
   `thoiGianLap` datetime(3) NOT NULL,
   `tongGiaTri` decimal(18,2) NOT NULL,
   `loaiPhieu` varchar(191) NOT NULL,
-  `maNCC` varchar(191) DEFAULT NULL,
-  `maNhanVien` varchar(191) NOT NULL,
-  `ghiChu` text DEFAULT NULL,
-  `maDonHang` varchar(191) DEFAULT NULL
+  `maNCC` varchar(191) NOT NULL,
+  `maNhanVien` varchar(191) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `phieukho`
---
-
-INSERT INTO `phieukho` (`maPhieu`, `thoiGianLap`, `tongGiaTri`, `loaiPhieu`, `maNCC`, `maNhanVien`, `ghiChu`, `maDonHang`) VALUES
-('cmq1sdztp0002hbsi9nabr9dz', '2026-06-06 03:21:39.227', 2500000.00, 'NHAP', 'NCC_CF01', 'NV_MANAGER01', 'nhập thêm', NULL);
 
 -- --------------------------------------------------------
 
@@ -869,15 +753,6 @@ CREATE TABLE `thanhtoan` (
 --
 
 INSERT INTO `thanhtoan` (`maThanhToan`, `maDonHang`, `soTienGiaoDich`, `thoiGianThanhToan`, `trangThaiGiaoDich`, `maMayInBill`, `maMayPOS`, `phuongThuc`, `gatewayTransactionId`, `gatewayName`, `expirationTime`, `paymentUrl`, `errorCode`, `errorMessage`, `anhBienLai`) VALUES
-('cmpycme51000330aej3pqjpxr', 'DH_A6E0E107', 45000.00, '2026-06-03 17:36:58.644', 'THANH_CONG', NULL, NULL, 'VNPAY', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('cmpyctqx70003altern7wvk69', 'DH_42FEBC7A', 45000.00, '2026-06-03 17:42:41.803', 'THANH_CONG', NULL, NULL, 'VNPAY', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('cmpyd6h8c000336v7g3o1zntu', 'DH_1C2FD850', 45000.00, '2026-06-03 17:52:35.771', 'THANH_CONG', NULL, NULL, 'COD', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('cmpydmlkq0003x541effml5jg', 'DH_936817B7', 105000.00, '2026-06-03 18:05:07.897', 'THANH_CONG', NULL, NULL, 'COD', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('cmpz7q50b0003g249c1bp4jmj', 'DH_FE19A6E9', 45000.00, '2026-06-04 08:07:41.530', 'THANH_CONG', NULL, NULL, 'VNPAY', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('cmpz7u32j0007g249xu1b8qi3', 'DH_863145C6', 85000.00, '2026-06-04 08:10:45.643', 'THANH_CONG', NULL, NULL, 'COD', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('cmq0ywaif00038pbnzxvekdp1', 'DH_B4C5AAB8', 85000.00, '2026-06-05 13:36:04.405', 'THANH_CONG', NULL, NULL, 'VNPAY', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('cmq0z413m00078pbntoksuf63', 'DH_71FDDE54', 85000.00, '2026-06-05 13:42:05.458', 'THANH_CONG', NULL, NULL, 'TIEN_MAT', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('cmq0zh34s000b8pbnd4sl47c4', 'DH_0ECA6AF1', 85000.00, '2026-06-05 13:52:14.619', 'THANH_CONG', NULL, NULL, 'TIEN_MAT', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('TT_M01', 'DH_M01', 185000.00, '2026-05-25 08:50:42.000', 'THANH_CONG', NULL, NULL, 'THE_NGAN_HANG', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('TT_M02', 'DH_M02', 245000.00, '2026-05-24 08:50:42.000', 'THANH_CONG', NULL, NULL, 'TIEN_MAT', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('TT_M03', 'DH_M03', 90000.00, '2026-05-23 08:50:42.000', 'THANH_CONG', NULL, NULL, 'QR', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -936,14 +811,6 @@ CREATE TABLE `thanhtoantienmat` (
   `maThanhToan` varchar(191) NOT NULL,
   `tienKhachDua` decimal(18,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `thanhtoantienmat`
---
-
-INSERT INTO `thanhtoantienmat` (`maThanhToan`, `tienKhachDua`) VALUES
-('cmq0z413m00078pbntoksuf63', 500000.00),
-('cmq0zh34s000b8pbnd4sl47c4', 600000.00);
 
 -- --------------------------------------------------------
 
@@ -1235,8 +1102,7 @@ ALTER TABLE `nguoidung`
 -- Indexes for table `nguyenlieu`
 --
 ALTER TABLE `nguyenlieu`
-  ADD PRIMARY KEY (`maNguyenLieu`),
-  ADD KEY `NguyenLieu_maNCC_fkey` (`maNCC`);
+  ADD PRIMARY KEY (`maNguyenLieu`);
 
 --
 -- Indexes for table `nhacungcap`
@@ -1256,8 +1122,8 @@ ALTER TABLE `nhanvien`
 --
 ALTER TABLE `phieukho`
   ADD PRIMARY KEY (`maPhieu`),
-  ADD KEY `PhieuKho_maNhanVien_fkey` (`maNhanVien`),
-  ADD KEY `PhieuKho_maNCC_fkey` (`maNCC`);
+  ADD KEY `PhieuKho_maNCC_fkey` (`maNCC`),
+  ADD KEY `PhieuKho_maNhanVien_fkey` (`maNhanVien`);
 
 --
 -- Indexes for table `refund`
@@ -1344,7 +1210,7 @@ ALTER TABLE `banner_quang_cao`
 -- AUTO_INCREMENT for table `chitietgiohang`
 --
 ALTER TABLE `chitietgiohang`
-  MODIFY `maChiTietGio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `maChiTietGio` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `danhgia`
@@ -1362,13 +1228,13 @@ ALTER TABLE `diachigiaohang`
 -- AUTO_INCREMENT for table `giohang`
 --
 ALTER TABLE `giohang`
-  MODIFY `maGioHang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `maGioHang` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `hinhanhmon`
 --
 ALTER TABLE `hinhanhmon`
-  MODIFY `maHinhAnh` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `maHinhAnh` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `refund`
@@ -1505,12 +1371,6 @@ ALTER TABLE `mon`
   ADD CONSTRAINT `Mon_maDanhMuc_fkey` FOREIGN KEY (`maDanhMuc`) REFERENCES `danhmucmon` (`maDanhMuc`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `nguyenlieu`
---
-ALTER TABLE `nguyenlieu`
-  ADD CONSTRAINT `NguyenLieu_maNCC_fkey` FOREIGN KEY (`maNCC`) REFERENCES `nhacungcap` (`maNCC`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
 -- Constraints for table `nhanvien`
 --
 ALTER TABLE `nhanvien`
@@ -1521,7 +1381,7 @@ ALTER TABLE `nhanvien`
 -- Constraints for table `phieukho`
 --
 ALTER TABLE `phieukho`
-  ADD CONSTRAINT `PhieuKho_maNCC_fkey` FOREIGN KEY (`maNCC`) REFERENCES `nhacungcap` (`maNCC`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `PhieuKho_maNCC_fkey` FOREIGN KEY (`maNCC`) REFERENCES `nhacungcap` (`maNCC`) ON UPDATE CASCADE,
   ADD CONSTRAINT `PhieuKho_maNhanVien_fkey` FOREIGN KEY (`maNhanVien`) REFERENCES `nhanvien` (`maNhanVien`) ON UPDATE CASCADE;
 
 --

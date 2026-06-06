@@ -35,9 +35,12 @@ const getCategories = asyncHandler(async (req, res) => {
 });
 
 // GET /api/menu/items
+// includeHidden=true → trả cả món ẩn (dùng cho POS / quản lý)
 const getItems = asyncHandler(async (req, res) => {
-  const { category, search, noiBat, page = 1, limit = 20 } = req.query;
-  const where = { daXoa: false };
+  const { category, search, noiBat, page = 1, limit = 20, includeHidden } =
+    req.query;
+  const where = {};
+  if (includeHidden !== "true") where.daXoa = false;
   if (category) where.maDanhMuc = category;
   if (search) where.tenMon = { contains: search };
   if (noiBat === "true") where.isNoiBat = true;
@@ -54,7 +57,10 @@ const getItems = asyncHandler(async (req, res) => {
         doUong: true,
         doAn: true,
       },
-      orderBy: { ngayTao: "desc" },
+      orderBy:
+        includeHidden === "true"
+          ? [{ daXoa: "asc" }, { ngayTao: "desc" }]
+          : { ngayTao: "desc" },
     }),
     prisma.mon.count({ where }),
   ]);

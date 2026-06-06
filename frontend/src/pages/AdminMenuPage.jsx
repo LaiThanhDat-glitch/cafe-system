@@ -33,6 +33,7 @@ export default function AdminMenuPage() {
         menuAPI.getItems({
           search,
           limit: 200,
+          includeHidden: true,
           ...(category !== "all" ? { category } : {}),
         }),
       ]);
@@ -143,7 +144,7 @@ export default function AdminMenuPage() {
           ) : (
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {items.map((item) => (
-                <div key={item.maMon} className="card overflow-hidden">
+                <div key={item.maMon} className={`card overflow-hidden ${item.daXoa ? 'opacity-60 border-dashed border-cream-400' : ''}`}>
                   <div className="aspect-[4/3] bg-cream-100">
                     {item.hinhAnh?.[0] ? (
                       <img
@@ -180,6 +181,12 @@ export default function AdminMenuPage() {
                       </span>
                       <span>•</span>
                       <span>{(item.hinhAnh || []).length} ảnh</span>
+                      {item.daXoa && (
+                        <>
+                          <span>•</span>
+                          <span className="text-red-600 font-medium">Đã ẩn</span>
+                        </>
+                      )}
                     </div>
                     <div className="flex gap-2 pt-2">
                       <button

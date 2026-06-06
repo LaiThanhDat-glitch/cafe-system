@@ -433,6 +433,7 @@ model ChiTietGioHang {
   maGioHang     Int
   maMon         String
   soLuong       Int @default(1)
+  ghiChu        String? @db.VarChar(255)
 
   gioHang  GioHang @relation(fields: [maGioHang], references: [maGioHang])
   mon      Mon     @relation(fields: [maMon], references: [maMon])

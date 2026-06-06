@@ -83,6 +83,11 @@ const createOrder = asyncHandler(async (req, res) => {
       const mon = await prisma.mon.findUnique({ where: { maMon: item.maMon } });
       if (!mon)
         throw { statusCode: 400, message: `Món ${item.maMon} không tồn tại` };
+      if (mon.daXoa)
+        throw {
+          statusCode: 400,
+          message: `Món "${mon.tenMon}" đã ngừng bán`,
+        };
       const tuyChon = item.maTuyChon
         ? await prisma.tuyChonMon.findMany({
             where: { maTuyChon: { in: item.maTuyChon } },

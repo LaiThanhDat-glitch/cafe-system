@@ -26,22 +26,26 @@ const getCart = asyncHandler(async (req, res) => {
   const cart = await findOrCreateCart({ maNguoiDung, sessionId });
   const full = await prisma.gioHang.findUnique({
     where: { maGioHang: cart.maGioHang },
-    include: { chiTietGio: { include: { mon: true } } },
+    include: { chiTietGio: { include: { mon: { include: { hinhAnh: true, doUong: true } } } } },
   });
   res.json(full);
 });
 
 // POST /api/cart/items — add or update item
 const upsertCartItem = asyncHandler(async (req, res) => {
-  const { maMon, soLuong = 1, sessionId } = req.body;
+  const { maMon, soLuong = 1, sessionId, ghiChu } = req.body;
   const maNguoiDung = req.user?.maNguoiDung;
   if (!maMon) return res.status(400).json({ message: "maMon là bắt buộc" });
+
+  const mon = await prisma.mon.findUnique({ where: { maMon } });
+  if (!mon || mon.daXoa)
+    return res.status(400).json({ message: "Món đã ngừng bán" });
 
   const cart = await findOrCreateCart({ maNguoiDung, sessionId });
 
   // Check if item exists in cart
   const existing = await prisma.chiTietGioHang.findFirst({
-    where: { maGioHang: cart.maGioHang, maMon },
+    where: { maGioHang: cart.maGioHang, maMon, ghiChu: ghiChu || null },
   });
   if (existing) {
     const updated = await prisma.chiTietGioHang.update({
@@ -52,7 +56,7 @@ const upsertCartItem = asyncHandler(async (req, res) => {
   }
 
   const item = await prisma.chiTietGioHang.create({
-    data: { maGioHang: cart.maGioHang, maMon, soLuong },
+    data: { maGioHang: cart.maGioHang, maMon, soLuong, ghiChu },
   });
   res.status(201).json(item);
 });

@@ -38,6 +38,20 @@ export default function CartPage() {
     try {
       const res = await cartAPI.get({ sessionId });
       setCart(res.data);
+      
+      // Parse ghiChu to notes state
+      const initialNotes = {};
+      res.data?.chiTietGio?.forEach(c => {
+        if (c.ghiChu) {
+          initialNotes[c.maChiTietGio] = {
+            da: c.ghiChu.match(/Đá: ([^|;]+)/)?.[1]?.trim() || "",
+            duong: c.ghiChu.match(/Đường: ([^|;]+)/)?.[1]?.trim() || "",
+            size: c.ghiChu.match(/Size: ([^|;]+)/)?.[1]?.trim() || "",
+            text: c.ghiChu.split('|').pop().replace(/Size:.*|Đá:.*|Đường:.*/g, '').trim() || ""
+          };
+        }
+      });
+      setNotes(initialNotes);
     } catch (err) {
       setCart(null);
     }

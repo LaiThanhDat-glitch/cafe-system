@@ -14,6 +14,7 @@ export default function MenuPage() {
   const [search, setSearch] = useState("");
   const [cart, setCart] = useState([]);
   const [detail, setDetail] = useState(null);
+  const [detailOptions, setDetailOptions] = useState({ da: "", duong: "", size: "" });
 
   useEffect(() => {
     menuAPI.getCategories().then((r) => setCategories(r.data));
@@ -36,6 +37,7 @@ export default function MenuPage() {
             maMon: c.maMon,
             qty: c.soLuong,
             giaBan: c.mon?.giaBan,
+            ghiChu: c.ghiChu,
           })) || [];
         setCart(data);
       } catch (err) {
@@ -54,25 +56,54 @@ export default function MenuPage() {
     return s;
   };
 
-  const addToCart = async (item, qty = 1) => {
+  const addToCart = async (item, qty = 1, ghiChu = undefined) => {
     // optimistic local update
     setCart((prev) => {
-      const ex = prev.find((c) => c.maMon === item.maMon);
+      const ex = prev.find((c) => c.maMon === item.maMon && c.ghiChu === ghiChu);
       if (ex)
         return prev.map((c) =>
-          c.maMon === item.maMon ? { ...c, qty: c.qty + qty } : c,
+          c.maMon === item.maMon && c.ghiChu === ghiChu ? { ...c, qty: c.qty + qty } : c,
         );
-      return [...prev, { ...item, qty }];
+      return [...prev, { ...item, qty, ghiChu }];
     });
     setDetail(null);
 
     try {
       const sessionId = getSessionId();
-      await cartAPI.addItem({ maMon: item.maMon, soLuong: qty, sessionId });
+      await cartAPI.addItem({ maMon: item.maMon, soLuong: qty, sessionId, ghiChu });
     } catch (err) {
       console.error("cartAPI.addItem failed", err);
     }
   };
+
+  const openDetail = (item) => {
+    setDetail(item);
+    if (item.doUong) {
+      setDetailOptions({
+        da: item.doUong.mucDoDa || "Bình thường",
+        duong: item.doUong.mucDoDuong || "Bình thường",
+        size: item.doUong.mucSize || "M",
+      });
+    } else {
+      setDetailOptions({ da: "", duong: "", size: "" });
+    }
+  };
+
+  const handleConfirmAdd = () => {
+    if (!detail) return;
+    let ghiChuParts = [];
+    if (detail.doUong) {
+      if (detailOptions.size) ghiChuParts.push(`Size: ${detailOptions.size}`);
+      if (detailOptions.da) ghiChuParts.push(`Đá: ${detailOptions.da}`);
+      if (detailOptions.duong) ghiChuParts.push(`Đường: ${detailOptions.duong}`);
+    }
+    const ghiChu = ghiChuParts.length > 0 ? ghiChuParts.join(" | ") : undefined;
+    addToCart(detail, 1, ghiChu);
+  };
+
+  const ICE_OPTIONS = ["Không đá", "Ít đá", "Bình thường", "Nhiều đá"];
+  const SUGAR_OPTIONS = ["Không đường", "Ít đường", "Bình thường", "Nhiều đường"];
+  const SIZE_OPTIONS = ["S", "M", "L", "XL"];
 
   const cartCount = cart.reduce((s, c) => s + c.qty, 0);
   const cartTotal = cart.reduce((s, c) => s + Number(c.giaBan) * c.qty, 0);
@@ -81,7 +112,7 @@ export default function MenuPage() {
     <div className="min-h-screen bg-cream-100">
       {/* Header */}
       <header className="bg-coffee-900 text-cream-100 sticky top-0 z-40 shadow-lg">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center sm:justify-between gap-3 sm:gap-0">
           <div className="flex items-center gap-3">
             <span className="text-2xl">☕</span>
             <div>
@@ -91,7 +122,7 @@ export default function MenuPage() {
           </div>
           <div className="flex items-center gap-3">
             <input
-              className="bg-coffee-800 border border-coffee-700 rounded-lg px-3 py-1.5 text-sm text-cream-100 placeholder-coffee-400 focus:outline-none focus:border-coffee-500 w-48"
+              className="bg-coffee-800 border border-coffee-700 rounded-lg px-3 py-1.5 text-sm text-cream-100 placeholder-coffee-400 focus:outline-none focus:border-coffee-500 w-full sm:w-48 mt-2 sm:mt-0"
               placeholder="🔍 Tìm món..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -130,8 +161,8 @@ export default function MenuPage() {
       </header>
 
       {/* Hero */}
-      <div className="bg-gradient-to-r from-coffee-900 via-coffee-800 to-coffee-700 text-cream-100 py-16 px-4 text-center">
-        <h2 className="font-display text-5xl font-extrabold mb-2">
+      <div className="bg-gradient-to-r from-coffee-900 via-coffee-800 to-coffee-700 text-cream-100 py-12 sm:py-16 px-4 text-center">
+        <h2 className="font-display text-3xl sm:text-5xl font-extrabold mb-2">
           Cafe System
         </h2>
         <p className="text-cream-300 text-lg">
@@ -142,7 +173,7 @@ export default function MenuPage() {
 
       {/* Categories */}
       <div className="max-w-6xl mx-auto px-4 py-4">
-        <div className="sticky top-20 z-30 bg-cream-100 py-2 -mx-4 px-4">
+        <div className="sticky top-16 sm:top-20 z-30 bg-cream-100 py-2 px-2 sm:px-4">
           <div className="flex gap-2 overflow-x-auto pb-2">
             <button
               onClick={() => setActiveCat("all")}
@@ -168,12 +199,12 @@ export default function MenuPage() {
 
       {/* Items */}
       <div className="max-w-6xl mx-auto px-4 pb-32">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {items.map((item) => (
             <div
               key={item.maMon}
               className="card hover:shadow-md transition-all cursor-pointer group"
-              onClick={() => setDetail(item)}
+              onClick={() => openDetail(item)}
             >
               <div className="aspect-square overflow-hidden rounded-t-xl bg-cream-100">
                 {item.hinhAnh?.[0] ? (
@@ -295,8 +326,56 @@ export default function MenuPage() {
                   {detail.diemDanhGia.toFixed(1)} điểm
                 </p>
               )}
+
+              {detail.doUong && (
+                <div className="mb-6 space-y-4">
+                  <div>
+                    <p className="text-sm font-medium text-coffee-800 mb-2">Size</p>
+                    <div className="flex flex-wrap gap-2">
+                      {SIZE_OPTIONS.map((opt) => (
+                        <button
+                          key={opt}
+                          onClick={() => setDetailOptions({ ...detailOptions, size: opt })}
+                          className={`px-4 py-1.5 rounded-lg text-sm border transition-all ${detailOptions.size === opt ? "bg-coffee-600 text-white border-coffee-600" : "bg-white text-coffee-600 border-coffee-200 hover:border-coffee-400"}`}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-coffee-800 mb-2">Mức Đá</p>
+                    <div className="flex flex-wrap gap-2">
+                      {ICE_OPTIONS.map((opt) => (
+                        <button
+                          key={opt}
+                          onClick={() => setDetailOptions({ ...detailOptions, da: opt })}
+                          className={`px-4 py-1.5 rounded-lg text-sm border transition-all ${detailOptions.da === opt ? "bg-coffee-600 text-white border-coffee-600" : "bg-white text-coffee-600 border-coffee-200 hover:border-coffee-400"}`}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-coffee-800 mb-2">Mức Đường</p>
+                    <div className="flex flex-wrap gap-2">
+                      {SUGAR_OPTIONS.map((opt) => (
+                        <button
+                          key={opt}
+                          onClick={() => setDetailOptions({ ...detailOptions, duong: opt })}
+                          className={`px-4 py-1.5 rounded-lg text-sm border transition-all ${detailOptions.duong === opt ? "bg-coffee-600 text-white border-coffee-600" : "bg-white text-coffee-600 border-coffee-200 hover:border-coffee-400"}`}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <button
-                onClick={() => addToCart(detail)}
+                onClick={handleConfirmAdd}
                 className="btn-primary w-full py-3 text-base"
               >
                 + Thêm vào giỏ hàng

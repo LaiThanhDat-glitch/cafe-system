@@ -13,8 +13,16 @@ const {
 
 // GET /api/kds/orders — live orders for kitchen display
 const getKDSOrders = asyncHandler(async (req, res) => {
+  const yesterday = new Date();
+  yesterday.setHours(yesterday.getHours() - 24);
+
   const orders = await prisma.donHang.findMany({
-    where: { trangThai: { in: ["CHO_XAC_NHAN", "DANG_PHA_CHE"] } },
+    where: {
+      OR: [
+        { trangThai: { in: ["CHO_XAC_NHAN", "DANG_PHA_CHE"] } },
+        { trangThai: "HOAN_THANH", thoiGianTao: { gte: yesterday } }
+      ]
+    },
     include: {
       chiTiet: { include: { mon: true, tuyChon: true } },
       ban: true,
@@ -478,12 +486,8 @@ const createPayment = asyncHandler(async (req, res) => {
       });
     }
 
-    // Mark order complete + trừ kho khi thanh toán thành công
+    // Mark order as paid by updating its payment but DO NOT change order status to HOAN_THANH
     if (trangThaiGiaoDich === "THANH_CONG") {
-      await tx.donHang.update({
-        where: { maDonHang },
-        data: { trangThai: "HOAN_THANH" },
-      });
       await deductInventoryForOrder(tx, {
         maDonHang,
         maNhanVien: req.user?.maNguoiDung,
@@ -543,10 +547,6 @@ const handleVnpayCallback = asyncHandler(async (req, res) => {
       await tx.thanhToan.update({
         where: { maThanhToan: thanh.maThanhToan },
         data: { trangThaiGiaoDich: "THANH_CONG" },
-      });
-      await tx.donHang.update({
-        where: { maDonHang },
-        data: { trangThai: "HOAN_THANH" },
       });
       await deductInventoryForOrder(tx, { maDonHang });
     });
