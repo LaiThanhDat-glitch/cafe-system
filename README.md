@@ -64,6 +64,8 @@ npm run db:seed           # Seed dữ liệu mẫu
 
 ## hoặc import database trong thư mục backend/database/cafe_db
 
+npx prisma generate
+
 npm run dev               # Chạy backend port 3001
 ```
 
