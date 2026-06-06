@@ -1,7 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
 
-// Pages
 import LoginPage from "./pages/LoginPage";
 import MenuPage from "./pages/MenuPage";
 import CartPage from "./pages/CartPage";
@@ -15,19 +14,23 @@ import StaffPage from "./pages/StaffPage";
 import OrdersPage from "./pages/OrdersPage";
 import CustomerPage from "./pages/CustomerPage";
 
+const MANAGER = "Quản lý";
+const CASHIER = "Thu ngân";
+const BARISTA = "Pha chế";
+
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const { user, loading, role, isStaff } = useAuth();
-  if (loading)
+  const { user, loading, role } = useAuth();
+
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <span className="text-coffee-600 font-display text-2xl">
-          Đang tải...
-        </span>
+        <span className="text-coffee-600 font-display text-2xl">Đang tải...</span>
       </div>
     );
+  }
+
   if (!user) return <Navigate to="/login" replace />;
-  if (allowedRoles && !allowedRoles.includes(role))
-    return <Navigate to="/" replace />;
+  if (allowedRoles && !allowedRoles.includes(role)) return <Navigate to="/" replace />;
   return children;
 };
 
@@ -36,103 +39,99 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* Public */}
           <Route path="/" element={<MenuPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/cart" element={<CartPage />} />
 
-          {/* Staff POS */}
           <Route
             path="/pos"
-            element={
-              <ProtectedRoute allowedRoles={["Quản lý", "Thu ngân"]}>
+            element={(
+              <ProtectedRoute allowedRoles={[MANAGER, CASHIER]}>
                 <POSPage />
               </ProtectedRoute>
-            }
+            )}
           />
 
-          {/* Barista KDS */}
           <Route
             path="/kds"
-            element={
-              <ProtectedRoute allowedRoles={["Quản lý", "Pha chế"]}>
+            element={(
+              <ProtectedRoute allowedRoles={[MANAGER, BARISTA]}>
                 <KDSPage />
               </ProtectedRoute>
-            }
+            )}
           />
 
-          {/* Manager Dashboard */}
           <Route
             path="/dashboard"
-            element={
-              <ProtectedRoute allowedRoles={["Quản lý"]}>
+            element={(
+              <ProtectedRoute allowedRoles={[MANAGER]}>
                 <DashboardPage />
               </ProtectedRoute>
-            }
+            )}
           />
 
           <Route
             path="/tables"
-            element={
-              <ProtectedRoute allowedRoles={["Quản lý", "Thu ngân"]}>
+            element={(
+              <ProtectedRoute allowedRoles={[MANAGER, CASHIER]}>
                 <TablePage />
               </ProtectedRoute>
-            }
+            )}
           />
 
           <Route
             path="/inventory"
-            element={
-              <ProtectedRoute allowedRoles={["Quản lý"]}>
+            element={(
+              <ProtectedRoute allowedRoles={[MANAGER]}>
                 <InventoryPage />
               </ProtectedRoute>
-            }
+            )}
           />
 
           <Route
             path="/admin/menu"
-            element={
-              <ProtectedRoute allowedRoles={["Quản lý"]}>
+            element={(
+              <ProtectedRoute allowedRoles={[MANAGER]}>
                 <AdminMenuPage />
               </ProtectedRoute>
-            }
+            )}
           />
 
           <Route
             path="/staff"
-            element={
-              <ProtectedRoute allowedRoles={["Quản lý"]}>
+            element={(
+              <ProtectedRoute allowedRoles={[MANAGER, CASHIER, BARISTA]}>
                 <StaffPage />
               </ProtectedRoute>
-            }
+            )}
           />
 
           <Route
             path="/orders"
-            element={
+            element={(
               <ProtectedRoute>
                 <OrdersPage />
               </ProtectedRoute>
-            }
+            )}
           />
 
           <Route
             path="/account"
-            element={
+            element={(
               <ProtectedRoute>
                 <CustomerPage />
               </ProtectedRoute>
-            }
+            )}
           />
 
           <Route
             path="/history"
-            element={
+            element={(
               <ProtectedRoute>
                 <CustomerPage />
               </ProtectedRoute>
-            }
+            )}
           />
         </Routes>
       </BrowserRouter>

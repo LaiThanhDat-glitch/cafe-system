@@ -108,6 +108,7 @@ export const staffAPI = {
   list: () => api.get("/staff"),
   create: (data) => api.post("/staff", data),
   getShifts: (params) => api.get("/staff/shifts", { params }),
+  getCurrentShift: () => api.get("/staff/shifts/current"),
   checkin: (data) => api.post("/staff/shifts/checkin", data),
   checkout: (id) => api.patch(`/staff/shifts/${id}/checkout`),
 };
